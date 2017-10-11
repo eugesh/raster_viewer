@@ -43,14 +43,14 @@ void CThread::run() {
 	YU = qvqp_x[1];
 	XR = qvqp_x[2];
 	YD = qvqp_x[3];
-	ro[0]=QVector3D(YD.x(),YD.y(),0);   //!!координаты крестов->QVector3D
+	ro[0]=QVector3D(YD.x(),YD.y(),0);   //!!РєРѕРѕСЂРґРёРЅР°С‚С‹ РєСЂРµСЃС‚РѕРІ->QVector3D
 	ro[1]=QVector3D(YU.x(),YU.y(),0);   //  1
 	ro[2]=QVector3D(XL.x(),XL.y(),0);   //2   3
 	ro[3]=QVector3D(XR.x(),XR.y(),0);   //  0
-	e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
-	e2=ro[1]-ro[0];  //во входном снимке
+	e1=ro[3]-ro[2];  //РЅР°РїСЂР°РІР»РµРЅРёР№Р° РѕСЃРµР№ РєРѕРѕСЂРґРёРЅР°С‚ Р“РµРѕРЎРљ
+	e2=ro[1]-ro[0];  //РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
 
-	e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
+	e1=e1.normalized (); //РЅРѕСЂРјРёСЂРѕРІР°РЅРЅС‹Р№ Р±Р°Р·РёСЃ Р“РµРѕРЎРљ РІС…РѕРґРЅРѕРіРѕ СЃРЅРёРјРєР°
 	e2=e2.normalized ();
 
 	b = ro[0] - ro[2];      //
@@ -58,19 +58,19 @@ void CThread::run() {
 	double e11,e12,e22,e1b,e2b;
 	double D,D1,t1;
 
-	e11=QVector3D::dotProduct(e1,e1); //скалЯрные произведениЯ
+	e11=QVector3D::dotProduct(e1,e1); //СЃРєР°Р»РЇСЂРЅС‹Рµ РїСЂРѕРёР·РІРµРґРµРЅРёРЇ
 	e12=QVector3D::dotProduct(e1,e2);
 	e22=QVector3D::dotProduct(e2,e2);
 	e1b=QVector3D::dotProduct(e1,b);
 	e2b=QVector3D::dotProduct(e2,b);
 
-	D =-e11*e22+e12*e12;  //преобразование
+	D =-e11*e22+e12*e12;  //РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ
 	D1=-e1b*e22+e2b*e12;
 
 	t1=D1/D;
-	// Координаты центра относительно координат меток?
+	// РљРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РєРѕРѕСЂРґРёРЅР°С‚ РјРµС‚РѕРє?
 	rc=ro[2]+e1*t1;
-	//создание выходного растра в формате .TIF
+	//СЃРѕР·РґР°РЅРёРµ РІС‹С…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР° РІ С„РѕСЂРјР°С‚Рµ .TIF
 	if(!rasterOut.CreateGeoTIFF( name_out, W_OUT, H_OUT,
 	                        /*GeoData,*/ rasterIn.GetProjectionData() )) {
 		puts("rasterOut.CreateGeoTIFF( name_out, truble");
@@ -79,13 +79,13 @@ void CThread::run() {
 	else
 		puts("rasterOut.CreateGeoTIFF( name_out,");  
 
-	//размеры блока по умолчанию
+	//СЂР°Р·РјРµСЂС‹ Р±Р»РѕРєР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 	int BlockSizeX_OUT = MAX_SIZE_BLOCK; //l
 	int BlockSizeY_OUT = MAX_SIZE_BLOCK;
-	// кол-во блоков
+	// РєРѕР»-РІРѕ Р±Р»РѕРєРѕРІ
 	int NumBlocksX_OUT = (int) ceil( double(W_OUT) / double(BlockSizeX_OUT) ) ;
 	int NumBlocksY_OUT = (int) ceil( double(H_OUT) / double(BlockSizeY_OUT) ) ;
-	//рассчет размеров блока (N_block*h_block = H_raster) OUT
+	//СЂР°СЃСЃС‡РµС‚ СЂР°Р·РјРµСЂРѕРІ Р±Р»РѕРєР° (N_block*h_block = H_raster) OUT
 	if ( BlockSizeX_OUT >= W_OUT)
 		BlockSizeX_OUT= W_OUT;
 	else
@@ -97,7 +97,7 @@ void CThread::run() {
 
 	//printf("\nHIN %d WIN %d HOUT %d WOUT %d BXOUT %d BYOUT %d",H_IN,W_IN,H_OUT,W_OUT,BlockSizeX_OUT,BlockSizeY_OUT);
 	//printf("\nNumBlocksX_OUT %d NumBlocksY_OUT %d",NumBlocksX_OUT,NumBlocksY_OUT);
-	r0=H_OUT/2.0;  //координаты центра выходного снимка
+	r0=H_OUT/2.0;  //РєРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° РІС‹С…РѕРґРЅРѕРіРѕ СЃРЅРёРјРєР°
 	c0=W_OUT/2.0;  
 
 	double cp,rp;
@@ -110,7 +110,7 @@ void CThread::run() {
 
 	//puts("No Error 4");
 	QPoint ijPosB ;
-	//цикл по всем блокам длЯ поворота растра
+	//С†РёРєР» РїРѕ РІСЃРµРј Р±Р»РѕРєР°Рј РґР»РЇ РїРѕРІРѕСЂРѕС‚Р° СЂР°СЃС‚СЂР°
 	//printf("rcx = %d rcy = %d e1x = %d e1y = %d e2x = %d e2y = %d\n", rc.x(),rc.y(),e1.x(),e1.y()),e2.x(),e2.y();
 	progressbar->setMinimum(0);
 	progressbar->setMaximum(NumBlocksY_OUT*NumBlocksX_OUT);
@@ -118,24 +118,24 @@ void CThread::run() {
 	for( int iBlock = 0 ; iBlock < NumBlocksY_OUT; iBlock ++ ) {
 		for( int jBlock = 0 ; jBlock < NumBlocksX_OUT; jBlock ++ ) {
 			// progressbar->setValue((int)((double)(iBlock*NumBlocksX_OUT+jBlock)/(double)NumBlocksX_OUT*NumBlocksY_OUT)*100);
-			// очередные координаты блока в выходном растре (левого верхнего угла)
+			// РѕС‡РµСЂРµРґРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±Р»РѕРєР° РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ (Р»РµРІРѕРіРѕ РІРµСЂС…РЅРµРіРѕ СѓРіР»Р°)
 			QPoint ijPos(jBlock*BlockSizeX_OUT, iBlock*BlockSizeY_OUT) ; 
-			// Читаем блок результирующей карты. Координаты углов блока в выходном растре
+			// Р§РёС‚Р°РµРј Р±Р»РѕРє СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ РєР°СЂС‚С‹. РљРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			QPoint pb[4];
 			pb[0] = ijPos;
 			pb[1] = ijPos+QPoint(BlockSizeX_OUT,0);               //12
 			pb[2] = ijPos+QPoint(BlockSizeX_OUT,BlockSizeY_OUT);  //43 
-			pb[3] = ijPos+QPoint(0,BlockSizeY_OUT); //координаты углов блока в выходном растре
-			// Ищем соответствующие им координаты углов блока во входном растре
+			pb[3] = ijPos+QPoint(0,BlockSizeY_OUT); //РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
+			// РС‰РµРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РёРј РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІРѕ РІС…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			QPointF pbIN[4];
-			double dcIN[4],drIN[4]; // координаты относительно центра
+			double dcIN[4],drIN[4]; // РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ С†РµРЅС‚СЂР°
 			for( int k = 0; k < 4 ; ++k ) {
 				dcIN[k]=pb[k].x()-c0;
 				drIN[k]=r0-pb[k].y();
 				point=rc+e1*dcIN[k]+e2*drIN[k];
-				pbIN[k] = point.toPoint();     // координаты углов блока во входном растре
+				pbIN[k] = point.toPoint();     // РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІРѕ РІС…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			}
-			// Проверка на попадание в границы растра
+			// РџСЂРѕРІРµСЂРєР° РЅР° РїРѕРїР°РґР°РЅРёРµ РІ РіСЂР°РЅРёС†С‹ СЂР°СЃС‚СЂР°
 			for( int k = 0; k < 4 ; ++k ) {
 				if(pbIN[k].x()<0)	pbIN[k].setX(0);
 				if(pbIN[k].y()<0)	pbIN[k].setY(0);  
@@ -173,26 +173,26 @@ void CThread::run() {
 						minY = 0;
 					}
 			}
-			//размеры блока во входном растре
+			//СЂР°Р·РјРµСЂС‹ Р±Р»РѕРєР° РІРѕ РІС…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			int BlockSizeX_IN = ceil(maxX) - floor(minX); 
 			int BlockSizeY_IN = ceil(maxY) - floor(minY);
-			QImage ijBlock_IN(BlockSizeX_IN,BlockSizeY_IN, QImage::Format_Indexed8); // блок входного растра, чб, тк растр чб
+			QImage ijBlock_IN(BlockSizeX_IN,BlockSizeY_IN, QImage::Format_Indexed8); // Р±Р»РѕРє РІС…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР°, С‡Р±, С‚Рє СЂР°СЃС‚СЂ С‡Р±
 			QPoint ijPosIN(floor(minX), floor(minY)); 
 			fprintf(stdout,"block: iBlock = %d : jBlock = %d\n", iBlock, jBlock);
 			fprintf(stdout,"block: BlockSizeX_IN = %d : BlockSizeY_IN = %d\n", BlockSizeX_IN, BlockSizeY_IN);
-			// читаем блок исходного растра
+			// С‡РёС‚Р°РµРј Р±Р»РѕРє РёСЃС…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР°
 			ijBlock_IN= rasterIn.GetQImageGray(ijPosIN, BlockSizeX_IN, BlockSizeY_IN);        
 
 			for(int r=0;r<BlockSizeY_OUT;r++) {
 				for(int c=0;c<BlockSizeX_OUT;c++) {
-					//координаты точек блока внутри растра = координаты блока + координаты внутри блока
-					ijPosB = ijPos + QPoint(c,r); //в выходном растре
-					dc=ijPosB.x()-c0;   //относительно центра
+					//РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РµРє Р±Р»РѕРєР° РІРЅСѓС‚СЂРё СЂР°СЃС‚СЂР° = РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±Р»РѕРєР° + РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРЅСѓС‚СЂРё Р±Р»РѕРєР°
+					ijPosB = ijPos + QPoint(c,r); //РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
+					dc=ijPosB.x()-c0;   //РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ С†РµРЅС‚СЂР°
 					dr=r0-ijPosB.y();
-					point=rc+e1*dc+e2*dr; //координаты во входном снимке
-					cp=point.x();  //координаты во входном снимке
+					point=rc+e1*dc+e2*dr; //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
+					cp=point.x();  //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
 					rp=point.y();
-					icp = (int)roundD(cp); //координаты во входном снимке в типе инт
+					icp = (int)roundD(cp); //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ РІ С‚РёРїРµ РёРЅС‚
 					irp = (int)roundD(rp);
 
 					int color;
@@ -265,14 +265,14 @@ void CThread::run1() {
 	YU = qvqp_x[1];
 	XR = qvqp_x[2];
 	YD = qvqp_x[3];
-	ro[0]=QVector3D(YD.x(),YD.y(),0);   //!!координаты крестов->QVector3D
+	ro[0]=QVector3D(YD.x(),YD.y(),0);   //!!РєРѕРѕСЂРґРёРЅР°С‚С‹ РєСЂРµСЃС‚РѕРІ->QVector3D
 	ro[1]=QVector3D(YU.x(),YU.y(),0);   //  1
 	ro[2]=QVector3D(XL.x(),XL.y(),0);   //2   3
 	ro[3]=QVector3D(XR.x(),XR.y(),0);   //  0
-	e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
-	e2=ro[1]-ro[0];  //во входном снимке
+	e1=ro[3]-ro[2];  //РЅР°РїСЂР°РІР»РµРЅРёР№Р° РѕСЃРµР№ РєРѕРѕСЂРґРёРЅР°С‚ Р“РµРѕРЎРљ
+	e2=ro[1]-ro[0];  //РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
 
-	e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
+	e1=e1.normalized (); //РЅРѕСЂРјРёСЂРѕРІР°РЅРЅС‹Р№ Р±Р°Р·РёСЃ Р“РµРѕРЎРљ РІС…РѕРґРЅРѕРіРѕ СЃРЅРёРјРєР°
 	e2=e2.normalized ();
 
 	b = ro[0] - ro[2];      //
@@ -280,13 +280,13 @@ void CThread::run1() {
 	double e11,e12,e22,e1b,e2b;
 	double D,D1,t1;
 
-	e11=QVector3D::dotProduct(e1,e1); //скалЯрные произведениЯ
+	e11=QVector3D::dotProduct(e1,e1); //СЃРєР°Р»РЇСЂРЅС‹Рµ РїСЂРѕРёР·РІРµРґРµРЅРёРЇ
 	e12=QVector3D::dotProduct(e1,e2);
 	e22=QVector3D::dotProduct(e2,e2);
 	e1b=QVector3D::dotProduct(e1,b);
 	e2b=QVector3D::dotProduct(e2,b);
 
-	D =-e11*e22+e12*e12;  //преобразование
+	D =-e11*e22+e12*e12;  //РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ
 	D1=-e1b*e22+e2b*e12;
 
 	t1=D1/D;
@@ -294,7 +294,7 @@ void CThread::run1() {
 	//printf("t1=%lf\n",t1);
 
 	rc=ro[2]+e1*t1;   
-	//создание выходного растра в формате .TIF
+	//СЃРѕР·РґР°РЅРёРµ РІС‹С…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР° РІ С„РѕСЂРјР°С‚Рµ .TIF
 	if(!rasterOut.CreateGeoTIFF( name_out, W_OUT, H_OUT,
 	                        /*GeoData,*/ rasterIn.GetProjectionData() )) {
 		puts("rasterOut.CreateGeoTIFF( name_out, truble");
@@ -304,13 +304,13 @@ void CThread::run1() {
 		puts("rasterOut.CreateGeoTIFF( name_out,");  
 	//puts("No Error 3");
 
-	//размеры блока по умолчанию
+	//СЂР°Р·РјРµСЂС‹ Р±Р»РѕРєР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 	int BlockSizeX_OUT = MAX_SIZE_BLOCK; //l
 	int BlockSizeY_OUT = MAX_SIZE_BLOCK;
-	// кол-во блоков
+	// РєРѕР»-РІРѕ Р±Р»РѕРєРѕРІ
 	int NumBlocksX_OUT = (int) ceil( double(W_OUT) / double(BlockSizeX_OUT) ) ;
 	int NumBlocksY_OUT = (int) ceil( double(H_OUT) / double(BlockSizeY_OUT) ) ;
-	//рассчет размеров блока (N_block*h_block = H_raster) OUT
+	//СЂР°СЃСЃС‡РµС‚ СЂР°Р·РјРµСЂРѕРІ Р±Р»РѕРєР° (N_block*h_block = H_raster) OUT
 	if ( BlockSizeX_OUT >= W_OUT)
 		BlockSizeX_OUT= W_OUT;
 	else
@@ -322,7 +322,7 @@ void CThread::run1() {
 
 	//printf("\nHIN %d WIN %d HOUT %d WOUT %d BXOUT %d BYOUT %d",H_IN,W_IN,H_OUT,W_OUT,BlockSizeX_OUT,BlockSizeY_OUT);
 	//printf("\nNumBlocksX_OUT %d NumBlocksY_OUT %d",NumBlocksX_OUT,NumBlocksY_OUT);
-	r0=H_OUT/2.0;  //координаты центра выходного снимка
+	r0=H_OUT/2.0;  //РєРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° РІС‹С…РѕРґРЅРѕРіРѕ СЃРЅРёРјРєР°
 	c0=W_OUT/2.0;  
 
 	double cp,rp;
@@ -335,21 +335,21 @@ void CThread::run1() {
 
 	//puts("No Error 4");
 	QPoint ijPosB ;
-	//цикл по всем блокам длЯ поворота растра
+	//С†РёРєР» РїРѕ РІСЃРµРј Р±Р»РѕРєР°Рј РґР»РЇ РїРѕРІРѕСЂРѕС‚Р° СЂР°СЃС‚СЂР°
 	//printf("rcx = %d rcy = %d e1x = %d e1y = %d e2x = %d e2y = %d\n", rc.x(),rc.y(),e1.x(),e1.y()),e2.x(),e2.y();
 	progressbar->setMinimum(0);
 	progressbar->setMaximum(NumBlocksY_OUT*NumBlocksX_OUT);
 	for( int iBlock = 0 ; iBlock < NumBlocksY_OUT; iBlock ++ ) {
 		for( int jBlock = 0 ; jBlock < NumBlocksX_OUT; jBlock ++ ) {
 			//progressbar->setValue((int)((double)(iBlock*NumBlocksX_OUT+jBlock)/(double)NumBlocksX_OUT*NumBlocksY_OUT)*100);
-			//очередные координаты блока в выходном растре
+			//РѕС‡РµСЂРµРґРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±Р»РѕРєР° РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			QPoint ijPos(jBlock*BlockSizeX_OUT, iBlock*BlockSizeY_OUT) ; 
-			//читаем блок результирующей карты      
+			//С‡РёС‚Р°РµРј Р±Р»РѕРє СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµР№ РєР°СЂС‚С‹      
 			QPoint pb[4];
 			pb[0] = ijPos;
 			pb[1] = ijPos+QPoint(BlockSizeX_OUT,0);               //12
 			pb[2] = ijPos+QPoint(BlockSizeX_OUT,BlockSizeY_OUT);  //43 
-			pb[3] = ijPos+QPoint(0,BlockSizeY_OUT); //координаты углов блока в выходном растре
+			pb[3] = ijPos+QPoint(0,BlockSizeY_OUT); //РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 
 			QPointF pbIN[4];
 			double dcIN[4],drIN[4];
@@ -357,7 +357,7 @@ void CThread::run1() {
 				dcIN[k]=pb[k].x()-c0;
 				drIN[k]=r0-pb[k].y();
 				point=rc+e1*dcIN[k]+e2*drIN[k];
-				pbIN[k] = point.toPoint();     //координаты углов блока во входном растре
+				pbIN[k] = point.toPoint();     //РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРіР»РѕРІ Р±Р»РѕРєР° РІРѕ РІС…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			}
 			for( int k = 0; k < 4 ; ++k ) {
 				if(pbIN[k].x()<0)	pbIN[k].setX(0);
@@ -396,32 +396,32 @@ void CThread::run1() {
 						minY = 0;
 					}
 			}
-			//размеры блока во входном растре
+			//СЂР°Р·РјРµСЂС‹ Р±Р»РѕРєР° РІРѕ РІС…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 			int BlockSizeX_IN = ceil(maxX) - floor(minX); 
 			int BlockSizeY_IN = ceil(maxY) - floor(minY);
 			//QImage ijBlock_IN(BlockSizeX_IN,BlockSizeY_IN,QImage::Format_RGB32);  
-			QImage ijBlock_IN(BlockSizeX_IN,BlockSizeY_IN, QImage::Format_Indexed8);//блок входного растра, чб, тк растр чб
+			QImage ijBlock_IN(BlockSizeX_IN,BlockSizeY_IN, QImage::Format_Indexed8);//Р±Р»РѕРє РІС…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР°, С‡Р±, С‚Рє СЂР°СЃС‚СЂ С‡Р±
 			QPoint ijPosIN(floor(minX),floor(minY)); 
 			fprintf(stdout,"block: iBlock = %d : jBlock = %d\n", iBlock, jBlock);
 			fprintf(stdout,"block: BlockSizeX_IN = %d : BlockSizeY_IN = %d\n", BlockSizeX_IN, BlockSizeY_IN);
-			// читаем блок исходного растра
+			// С‡РёС‚Р°РµРј Р±Р»РѕРє РёСЃС…РѕРґРЅРѕРіРѕ СЂР°СЃС‚СЂР°
 			//puts("No Error 5");
 			//ijBlock_IN= rasterIn.GetQImageRGB32(ijPosIN, BlockSizeX_IN, BlockSizeY_IN);
 			ijBlock_IN= rasterIn.GetQImageGray(ijPosIN, BlockSizeX_IN, BlockSizeY_IN);        
 			//puts("No Error 6");
 			for(int r=0;r<BlockSizeY_OUT;r++) {
 				for(int c=0;c<BlockSizeX_OUT;c++) {
-					//координаты точек блока внутри растра = координаты блока + координаты внутри блока
-					ijPosB = ijPos + QPoint(c,r); //в выходном растре
+					//РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РµРє Р±Р»РѕРєР° РІРЅСѓС‚СЂРё СЂР°СЃС‚СЂР° = РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±Р»РѕРєР° + РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРЅСѓС‚СЂРё Р±Р»РѕРєР°
+					ijPosB = ijPos + QPoint(c,r); //РІ РІС‹С…РѕРґРЅРѕРј СЂР°СЃС‚СЂРµ
 
-					dc=ijPosB.x()-c0;   //относительно центра
+					dc=ijPosB.x()-c0;   //РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ С†РµРЅС‚СЂР°
 					dr=r0-ijPosB.y();
 					//printf("dc = %f dr = %f c0 = %f r0 = %f\n", dc,dr,c0,r0);             
-					point=rc+e1*dc+e2*dr; //координаты во входном снимке
-					cp=point.x();  //координаты во входном снимке
+					point=rc+e1*dc+e2*dr; //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
+					cp=point.x();  //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ
 					rp=point.y();
 					//std::cout<<"cp rp:"<<cp<<" "<<rp<<std::endl;
-					icp = (int)roundD(cp); //координаты во входном снимке в типе инт
+					icp = (int)roundD(cp); //РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРѕ РІС…РѕРґРЅРѕРј СЃРЅРёРјРєРµ РІ С‚РёРїРµ РёРЅС‚
 					irp = (int)roundD(rp);
 
 					int color;

@@ -53,7 +53,7 @@ class KrestScene : public QGraphicsScene
      //void textInserted(QGraphicsTextItem *item);
      //void itemSelected(QGraphicsItem *item);
  private:
-     QPointF startPos,endPos; //начальнаЯ/конечноЯ позиции курсора при зуммировании 
+     QPointF startPos,endPos; //РЅР°С‡Р°Р»СЊРЅР°СЏ/РєРѕРЅРµС‡РЅРѕСЏ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РїСЂРё Р·СѓРјРјРёСЂРѕРІР°РЅРёРё 
      //bool isItemChange(int type);
      QPointF cursorPos;
      //Krest::KrestType myKrestType;

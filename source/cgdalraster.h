@@ -101,7 +101,7 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
         Img = QImage( W, H, QImage::Format_Indexed8) ; 
         Img.setNumColors(256) ;
 
-        // чтение таблицы цветов
+        // С‡С‚РµРЅРёРµ С‚Р°Р±Р»РёС†С‹ С†РІРµС‚РѕРІ
         GDALColorTable *pColorTable ;
         pColorTable = (_pData->GetRasterBand(1))->GetColorTable() ;
 
@@ -114,7 +114,7 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
             Img.setColor( i, QColor(i,i,i).rgb() ) ;     
         } ;
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), W, H,
                           Img.bits(), Img.width(),Img.height(), GDT_Byte,
                           _NumBands, _BandsList, 0, Img.bytesPerLine(), 0) ;
@@ -125,9 +125,9 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
       } ;
       case 3 : {
         Img = QImage( W, H, QImage::Format_RGB32) ;    
-        Img.fill(0) ; // обнуление изображениЯ
+        Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), W, H, 
                           Img.bits(), Img.width(),Img.height(), GDT_Byte,
                           _NumBands, _BandsList, 4, Img.bytesPerLine(), 1 ) ;
@@ -156,7 +156,7 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
         Img = QImage( NewW, NewH, QImage::Format_Indexed8) ; 
         Img.setNumColors(256) ;
 
-        // чтение таблицы цветов
+        // С‡С‚РµРЅРёРµ С‚Р°Р±Р»РёС†С‹ С†РІРµС‚РѕРІ
         //GDALColorTable *pColorTable ;
         //pColorTable = (_pData->GetRasterBand(1))->GetColorTable() ;
 
@@ -171,7 +171,7 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
 
         //fprintf(stdout,"check\n") ;
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO ( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                           Img.bits(), Img.width(), Img.height(), GDT_Byte,
                           _NumBands, NULL, _nPixelSpace, Img.bytesPerLine(), 0) ;
@@ -182,9 +182,9 @@ QImage GetQImage( QPoint const&Pos, int W, int H ) {
       } ;
       case 3 : {
         Img = QImage( NewW, NewH, QImage::Format_RGB32) ;    
-        Img.fill(0) ; // обнуление изображениЯ
+        Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
         _nPixelSpace = 4;
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                           Img.bits(), Img.width(),Img.height(), GDT_Byte,
                           _NumBands, _BandsList, _nPixelSpace, Img.bytesPerLine(), 1 ) ;
@@ -221,7 +221,7 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
         Img = QImage( NewW, NewH, QImage::Format_Indexed8) ; 
         Img.setNumColors(256) ;
 
-        // чтение таблицы цветов
+        // С‡С‚РµРЅРёРµ С‚Р°Р±Р»РёС†С‹ С†РІРµС‚РѕРІ
         //GDALColorTable *pColorTable ;
         //pColorTable = (_pData->GetRasterBand(1))->GetColorTable() ;
 
@@ -236,7 +236,7 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
 
         //fprintf(stdout,"check\n") ;
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                           Img.bits(), Img.width(), Img.height(), GDT_Byte,
                           _NumBands, NULL, _nPixelSpace, Img.bytesPerLine(), 0) ;
@@ -247,9 +247,9 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
       } ;
       case 3 : {
         Img = QImage( NewW, NewH, QImage::Format_RGB32) ;    
-        Img.fill(0) ; // обнуление изображениЯ
+        Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH, 
                           Img.bits(), Img.width(),Img.height(), GDT_Byte,
                           _NumBands, _BandsList, _nPixelSpace, Img.bytesPerLine(), 1 ) ;
@@ -282,7 +282,7 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
      //   Img = QImage( NewW, NewH, QImage::Format_Indexed8) ; 
        // Img.setNumColors(256) ;
 
-        // чтение таблицы цветов
+        // С‡С‚РµРЅРёРµ С‚Р°Р±Р»РёС†С‹ С†РІРµС‚РѕРІ
         //GDALColorTable *pColorTable ;
         //pColorTable = (_pData->GetRasterBand(1))->GetColorTable() ;
 
@@ -297,7 +297,7 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
 
         //fprintf(stdout,"check\n") ;
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                           map, NewW, NewH, GDT_Byte,
                           _NumBands, NULL, _nPixelSpace,sizeof(cufftComplex)*NewW, 0) ;
@@ -308,9 +308,9 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
       } ;
       case 3 : {
         Img = QImage( NewW, NewH, QImage::Format_RGB32) ;    
-        Img.fill(0) ; // обнуление изображениЯ
+        Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 
-        // чтение растровых данных
+        // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
         _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH, 
                           map, NewW, NewH, GDT_Byte,
                           _NumBands, _BandsList, _nPixelSpace,sizeof(cufftComplex)*NewW, 1 ) ;
@@ -335,7 +335,7 @@ QImage GetQImageC( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) 
     GDALAllRegister() ;
     GDALDriver*pDriver =(GDALDriver*) GDALGetDriverByName("GTiff" ) ;
 
-    // создание доп. файла
+    // СЃРѕР·РґР°РЅРёРµ РґРѕРї. С„Р°Р№Р»Р°
     char **papszOptions = NULL;      
     papszOptions = CSLSetNameValue( papszOptions, "TFW", "YES" ) ;
 char block_size_str[100];
@@ -343,7 +343,7 @@ char **pcreate_str=0;
     _W = W ;
     _H = H ;
 
-    // создаем цветной GeoTiff
+    // СЃРѕР·РґР°РµРј С†РІРµС‚РЅРѕР№ GeoTiff
     _NumBands = 3 ;
     _BandsList[0] = 1 ; 
     _BandsList[1] = 2 ; 
@@ -357,7 +357,7 @@ char **pcreate_str=0;
 
 				sprintf(block_size_str,"%d",128);
 				printf("block_size_str=%s\n",block_size_str);
-				// задание размера блока
+				// Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° Р±Р»РѕРєР°
 				pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKXSIZE",block_size_str);
 				pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKYSIZE",block_size_str);
 				
@@ -394,14 +394,14 @@ char **pcreate_str=0;
     GDALAllRegister() ;
     GDALDriver*pDriver =(GDALDriver*) GDALGetDriverByName("GTiff" ) ;
 
-    // создание доп. файла
+    // СЃРѕР·РґР°РЅРёРµ РґРѕРї. С„Р°Р№Р»Р°
     char **papszOptions = NULL;
     papszOptions = CSLSetNameValue( papszOptions, "TFW", "YES" ) ;
 
     _W = W ;
     _H = H ;
 
-    // создаем чб GeoTiff
+    // СЃРѕР·РґР°РµРј С‡Р± GeoTiff
     _NumBands = 1 ;
     _BandsList[0] = 1 ;
     _nPixelSpace = 1 ;
@@ -448,7 +448,7 @@ char **pcreate_str=0;
 
       _pColorTable = new GDALColorTable ;
 
-      // установим два цвета:желтый и зеленый
+      // СѓСЃС‚Р°РЅРѕРІРёРј РґРІР° С†РІРµС‚Р°:Р¶РµР»С‚С‹Р№ Рё Р·РµР»РµРЅС‹Р№
       _pColorTable->SetColorEntry(127, &colorYellow) ;
       _pColorTable->SetColorEntry(64, &colorGreen) ;
       _pColorTable->SetColorEntry(255, &colorWhite) ;
@@ -641,7 +641,7 @@ char **pcreate_str=0;
     //papszOptions = CSLSetNameValue( papszOptions, "WORLDFILE","YES" ) ;
     //papszOptions = CSLSetNameValue( papszOptions, "TILED","YES" ) ;
 
-    // создание доп. файла
+    // СЃРѕР·РґР°РЅРёРµ РґРѕРї. С„Р°Р№Р»Р°
     papszOptions = CSLSetNameValue( papszOptions, "TFW", "YES" ) ;
 
     //papszOptions = CSLSetNameValue( papszOptions, "WORLDFILE","YES" ) ;

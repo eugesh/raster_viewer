@@ -113,7 +113,7 @@ bool CreateGeoTIFF( QString const&filename, int W, int H,
     GDALAllRegister() ;
     GDALDriver*pDriver =(GDALDriver*) GDALGetDriverByName("GTiff" ) ;
 
-    //создание доп. файла
+    //СЃРѕР·РґР°РЅРёРµ РґРѕРї. С„Р°Р№Р»Р°
     //char **papszOptions = NULL;      
     //papszOptions = CSLSetNameValue( papszOptions, "TFW", "YES" ) ;
     char block_size_str[100];
@@ -121,7 +121,7 @@ bool CreateGeoTIFF( QString const&filename, int W, int H,
     _W = W ;
     _H = H ;
 
-    // создаем цветной GeoTiff
+    // СЃРѕР·РґР°РµРј С†РІРµС‚РЅРѕР№ GeoTiff
     _NumBands = 3 ;
     _BandsList[0] = 1 ; 
     _BandsList[1] = 2 ; 
@@ -135,7 +135,7 @@ bool CreateGeoTIFF( QString const&filename, int W, int H,
 
 		sprintf(block_size_str,"%d",128);
 		//printf("block_size_str=%s\n",block_size_str);
-		// задание размера блока
+		// Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° Р±Р»РѕРєР°
 		pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKXSIZE",block_size_str);
 		pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKYSIZE",block_size_str);
 				
@@ -173,7 +173,7 @@ bool CreateGeoTIFF_gray( QString const&filename, int W, int H,
     GDALAllRegister() ;
     GDALDriver*pDriver =(GDALDriver*) GDALGetDriverByName("GTiff" ) ;
 
-    //создание доп. файла
+    //СЃРѕР·РґР°РЅРёРµ РґРѕРї. С„Р°Р№Р»Р°
     //char **papszOptions = NULL;      
     //papszOptions = CSLSetNameValue( papszOptions, "TFW", "YES" ) ;
     char block_size_str[100];
@@ -181,7 +181,7 @@ bool CreateGeoTIFF_gray( QString const&filename, int W, int H,
     _W = W ;
     _H = H ;
 
-    // создаем цветной GeoTiff
+    // СЃРѕР·РґР°РµРј С†РІРµС‚РЅРѕР№ GeoTiff
     _NumBands = 1 ;
     _BandsList[0] = 1 ; 
     _BandsList[1] = 2 ; 
@@ -196,7 +196,7 @@ bool CreateGeoTIFF_gray( QString const&filename, int W, int H,
 
 		sprintf(block_size_str,"%d",128);
 		//printf("block_size_str=%s\n",block_size_str);
-		// задание размера блока
+		// Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° Р±Р»РѕРєР°
 		pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKXSIZE",block_size_str);
 		pcreate_str=CSLSetNameValue(pcreate_str,"BLOCKYSIZE",block_size_str);
 				
@@ -230,9 +230,9 @@ QImage GetQImageRGB32( QPoint const&Pos, int W, int H ) {
 }
 QImage GetQImageRGB32( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) {
     QImage Img( NewW, NewH, QImage::Format_RGB32);
-    Img.fill(0) ; // обнуление изображениЯ
+    Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
     _nPixelSpace = 4;
-    // чтение растровых данных
+    // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
     _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                       Img.bits(), Img.width(),Img.height(), GDT_Byte,
                       _NumBands, _BandsList, _nPixelSpace, Img.bytesPerLine(), 1 );
@@ -244,14 +244,14 @@ QImage GetQImageGray( QPoint const&Pos, int W, int H ) {
 }
 QImage GetQImageGray( QPoint const&Pos, int BaseW, int BaseH, int NewW, int NewH ) {
     QImage Img(NewW, NewH, QImage::Format_Indexed8);
-    Img.fill(0) ; // обнуление изображениЯ
+    Img.fill(0) ; // РѕР±РЅСѓР»РµРЅРёРµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
     Img.setNumColors(256);
     for( int i = 0 ; i < 256 ; i ++ ) {
         Img.setColor( i, QColor(i,i,i).rgb( ) ) ;     
     } ;
     _nPixelSpace = 0;
     int numBands =1;
-    // чтение растровых данных
+    // С‡С‚РµРЅРёРµ СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
     _pData->RasterIO( GF_Read, Pos.x(), Pos.y(), BaseW, BaseH,
                       Img.bits(), Img.width(),Img.height(), GDT_Byte,
                       numBands, _BandsList, _nPixelSpace, Img.bytesPerLine(), 1 );

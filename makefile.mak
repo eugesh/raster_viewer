@@ -18,51 +18,51 @@ source_mylib_video_analysis_dir = $(MYLIB_DIR)/video_analysis
 ##############################################
 
 	
-# директория с исходными файлами
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё
 source_dir=$(base_dir)/source
 source_shot_dir=$(base_dir)/shot
 source_geom_dir=$(SHARED_MODULE_DIR)/geom
 source_raster_dir=$(SHARED_MODULE_DIR)/raster
-# директория с исходными файлами модуля работы с tiff-файлами
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РјРѕРґСѓР»СЏ СЂР°Р±РѕС‚С‹ СЃ tiff-С„Р°Р№Р»Р°РјРё
 source_tiff_dir=$(SHARED_MODULE_DIR)/source_tiff
-# директория с исходными файлами с сетью
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё СЃ СЃРµС‚СЊСЋ
 source_network_dir=$(SHARED_MODULE_DIR)/source_network
-# директория с исходыми файлами фотограмметрического модуля
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґС‹РјРё С„Р°Р№Р»Р°РјРё С„РѕС‚РѕРіСЂР°РјРјРµС‚СЂРёС‡РµСЃРєРѕРіРѕ РјРѕРґСѓР»СЏ
 source_photogrammetry_dir=$(SHARED_MODULE_DIR)/source_photogrammetry
-# директория с исходными файлами модуля работы с картографическими СК
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РјРѕРґСѓР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєР°СЂС‚РѕРіСЂР°С„РёС‡РµСЃРєРёРјРё РЎРљ
 source_cartographic_sc_dir=$(SHARED_MODULE_DIR)/cartographic_sc
-# дирктория с исходными файлами для работы с модулем ГИС-Интеграция
+# РґРёСЂРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґСѓР»РµРј Р“РРЎ-РРЅС‚РµРіСЂР°С†РёСЏ
 source_gis_dir=$(SHARED_MODULE_DIR)/source_gis
-# директория с исходными файлами для работы с многообъективными камерами
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРЅРѕРіРѕРѕР±СЉРµРєС‚РёРІРЅС‹РјРё РєР°РјРµСЂР°РјРё
 source_multi_shot_dir=$(SHARED_MODULE_DIR)/source_multi_shot
 source_equiv_shot_dir=$(SHARED_MODULE_DIR)/source_equiv_shot
 #
 source_module_link=$(SHARED_MODULE_DIR)/source_module_link
-# директория с исходными файлами для работы с моделями рельефа
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґРµР»СЏРјРё СЂРµР»СЊРµС„Р°
 source_relief_dir=$(SHARED_MODULE_DIR)/source_relief
-# директория с исходными файлами для работы с КСОИ
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ РёСЃС…РѕРґРЅС‹РјРё С„Р°Р№Р»Р°РјРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РљРЎРћР
 source_ksoi_dir=$(SHARED_MODULE_DIR)/source_ksoi
-# директория с h-файлами оконных форм
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ h-С„Р°Р№Р»Р°РјРё РѕРєРѕРЅРЅС‹С… С„РѕСЂРј
 
 source_graphic_item_image=$(base_dir)/graphic_item_image
 
 source_header_form_dir=$(base_dir)/form_h
-# директория с ui-файлами оконных форм
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ ui-С„Р°Р№Р»Р°РјРё РѕРєРѕРЅРЅС‹С… С„РѕСЂРј
 source_form_dir=$(base_dir)/form_ui
 
-# директория для объектных файлов
+# РґРёСЂРµРєС‚РѕСЂРёСЏ РґР»СЏ РѕР±СЉРµРєС‚РЅС‹С… С„Р°Р№Р»РѕРІ
 obj_dir=$(base_dir)/obj
-# директория для moc-файлов
+# РґРёСЂРµРєС‚РѕСЂРёСЏ РґР»СЏ moc-С„Р°Р№Р»РѕРІ
 moc_dir=$(base_dir)/moc
-# директория для выполняемого файла
+# РґРёСЂРµРєС‚РѕСЂРёСЏ РґР»СЏ РІС‹РїРѕР»РЅСЏРµРјРѕРіРѕ С„Р°Р№Р»Р°
 proc_dir=$(base_dir)/exe
 
 
-# директории с библиотечными файлами
+# РґРёСЂРµРєС‚РѕСЂРёРё СЃ Р±РёР±Р»РёРѕС‚РµС‡РЅС‹РјРё С„Р°Р№Р»Р°РјРё
 library_source_dir=$(base_dir)/library_source
 library_obj_dir=$(base_dir)/library_obj
 
-# директория с заголовочными файлами
+# РґРёСЂРµРєС‚РѕСЂРёСЏ СЃ Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹РјРё С„Р°Р№Р»Р°РјРё
 cpp_options_include=$(opt_inc) "$(NIITP_CPP)/include" \
 							$(opt_inc) "$(TIFF_DIR)/include" \
 							$(opt_inc) "$(GDAL_DIR)/include" \
@@ -125,13 +125,13 @@ endif
 						
 ##############################################							
  
-# задание правил 
+# Р·Р°РґР°РЅРёРµ РїСЂР°РІРёР» 
 .SUFFIXES :
 
-# h-файлы с формами для окон
+# h-С„Р°Р№Р»С‹ СЃ С„РѕСЂРјР°РјРё РґР»СЏ РѕРєРѕРЅ
 h_file_widget=$(source_header_form_dir)/form_mainwindow_krest.h
 
-# объектные файла за исключением moc-файлов
+# РѕР±СЉРµРєС‚РЅС‹Рµ С„Р°Р№Р»Р° Р·Р° РёСЃРєР»СЋС‡РµРЅРёРµРј moc-С„Р°Р№Р»РѕРІ
 obj_file=\
 	$(obj_dir)/main.$(ext_obj)\
 	$(obj_dir)/Krest_window.$(ext_obj)\
@@ -147,17 +147,17 @@ obj_file=\
 #	$(obj_dir)/cgdalraster.$(ext_obj)
 	
 
-# объектные файлы полученные из moc-файлов						
+# РѕР±СЉРµРєС‚РЅС‹Рµ С„Р°Р№Р»С‹ РїРѕР»СѓС‡РµРЅРЅС‹Рµ РёР· moc-С„Р°Р№Р»РѕРІ						
 obj_moc_file=\
 	$(obj_dir)/krest_window_moc.$(ext_obj)\
 	$(obj_dir)/krest_scene_moc.$(ext_obj)\
 	$(obj_dir)/cthread_moc.$(ext_obj)
 #	$(obj_dir)/transformation_moc.$(ext_obj)\
 
-# библиотечные модули
+# Р±РёР±Р»РёРѕС‚РµС‡РЅС‹Рµ РјРѕРґСѓР»Рё
 library_obj_file=
 
-# объектные файлы с cuda-кодом
+# РѕР±СЉРµРєС‚РЅС‹Рµ С„Р°Р№Р»С‹ СЃ cuda-РєРѕРґРѕРј
 obj_file_cuda=
 
 all:
@@ -175,14 +175,14 @@ clean:
 	$(command_del) $(obj_file_cuda)
 	$(command_del) $(proc_dir)/$(name_exe)
 
-# описание цели "построение приложения"
+# РѕРїРёСЃР°РЅРёРµ С†РµР»Рё "РїРѕСЃС‚СЂРѕРµРЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ"
 program :  $(h_file_widget) $(proc_dir)/$(name_exe)
 
-# создание h-файлов на основе ui-файлов
+# СЃРѕР·РґР°РЅРёРµ h-С„Р°Р№Р»РѕРІ РЅР° РѕСЃРЅРѕРІРµ ui-С„Р°Р№Р»РѕРІ
 $(source_header_form_dir)/form_mainwindow_krest.h : $(source_form_dir)/form_mainwindow_krest.ui
 	$(UIC) -o $@ $?
 
-# создание moc-файлов
+# СЃРѕР·РґР°РЅРёРµ moc-С„Р°Р№Р»РѕРІ
 $(moc_dir)/krest_window_moc.cpp : $(source_dir)/Krest_window.h
 	$(MOC) -o $@ $?
 
@@ -208,7 +208,7 @@ $(obj_dir)/cthread_moc.$(ext_obj) : $(moc_dir)/cthread_moc.cpp
 
 #$(obj_dir)/transformation_moc.$(ext_obj) : $(moc_dir)/transformation_moc.cpp
 #	$(command_comp)
-# исходные файлы
+# РёСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹
 
 #$(obj_dir)/auxqimage.$(ext_obj) : $(source_mylib_aux_dir)/auxqimage.cpp 
 #	$(command_comp)
@@ -249,7 +249,7 @@ $(obj_dir)/cthread.$(ext_obj) : $(source_dir)/cthread.cpp
 
 ######################################################
 
-#  подключение дополнительных моделей
+#  РїРѕРґРєР»СЋС‡РµРЅРёРµ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… РјРѕРґРµР»РµР№
 #include $(source_mylib_correlator_dir)/correlator.mak
 #include $(source_mylib_math_la_dir)/la.mak
 #include $(base_dir)/makefile_lib.mak
@@ -257,7 +257,7 @@ $(obj_dir)/cthread.$(ext_obj) : $(source_dir)/cthread.cpp
 
 include $(source_graphic_item_image)/graphic_item_image.mak
 
-# создание приложения с помощью линковщика
+# СЃРѕР·РґР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ РїРѕРјРѕС‰СЊСЋ Р»РёРЅРєРѕРІС‰РёРєР°
 $(proc_dir)/$(name_exe)  : $(obj_file) $(obj_moc_file) $(library_obj_file) $(obj_file_cuda)
 	$(command_link)  $(obj_file) $(obj_moc_file)   $(library_obj_file) $(obj_file_cuda) $(library)
 

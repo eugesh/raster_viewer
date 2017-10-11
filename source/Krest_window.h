@@ -37,25 +37,25 @@ class KrestView;
 
 double MathRound(double num, int precision);
 
-//! класс, описывающий окно отображения кадра
+//! РєР»Р°СЃСЃ, РѕРїРёСЃС‹РІР°СЋС‰РёР№ РѕРєРЅРѕ РѕС‚РѕР±СЂР°Р¶РµРЅРёВ¤ РєР°РґСЂР°
 class KrestWindow : public QMainWindow , public Ui::MainWindow {
 	  Q_OBJECT
 private:
 	KrestScene *scene;
 	QGraphicsItem_Image *QGI_Image;
-	bool is_move;//!< флаг режима перемещения
-	double c,r;//!< положение курсора
+	bool is_move;//!< С„Р»Р°Рі СЂРµР¶РёРјР° РїРµСЂРµРјРµС‰РµРЅРёВ¤
+	double c,r;//!< РїРѕР»РѕР¶РµРЅРёРµ РєСѓСЂСЃРѕСЂР°
 	QAction *pushButtonFit;
 	CThread*pThread ;
-	QPointF startPos,endPos; //начальнаЯ/конечноЯ позиции курсора при зуммировании
+	QPointF startPos,endPos; //РЅР°С‡Р°Р»СЊРЅР°СЏ/РєРѕРЅРµС‡РЅРѕСЏ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РїСЂРё Р·СѓРјРјРёСЂРѕРІР°РЅРёРё
 	Krest KrestXL,KrestXR,KrestYU,KrestYD;
 public:;
-    double PixelSize;//размер пикселЯ в мм
-    double FrameSizeMm;//размер рамки в мм
-    int FrameSizePx;//размер рамки в пикселЯх
-    bool useSizeMm; //использовать задание рамки в мм
-    QInputDialog *QIDSFSMm; //немодальные диалоги заданиЯ размера рамки в мм
-    QInputDialog *QIDSFSPx; //в пикселЯх
+    double PixelSize;//СЂР°Р·РјРµСЂ РїРёРєСЃРµР»СЏ РІ РјРј
+    double FrameSizeMm;//СЂР°Р·РјРµСЂ СЂР°РјРєРё РІ РјРј
+    int FrameSizePx;//СЂР°Р·РјРµСЂ СЂР°РјРєРё РІ РїРёРєСЃРµР»СЏС…
+    bool useSizeMm; //РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р·Р°РґР°РЅРёРµ СЂР°РјРєРё РІ РјРј
+    QInputDialog *QIDSFSMm; //РЅРµРјРѕРґР°Р»СЊРЅС‹Рµ РґРёР°Р»РѕРіРё Р·Р°РґР°РЅРёСЏ СЂР°Р·РјРµСЂР° СЂР°РјРєРё РІ РјРј
+    QInputDialog *QIDSFSPx; //РІ РїРёРєСЃРµР»СЏС…
     QPointF Center;
     RubberRect *RR;
     bool cutting;
@@ -65,7 +65,7 @@ public:;
     QString nameOut ;//image name
     QString pathOut ;//image path
     QString pathPoint ;//points path
-  	//! конструктор
+  	//! РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
     KrestWindow();
     ~KrestWindow();
     QPointF XL,XR,YU,YD;
@@ -82,12 +82,12 @@ private slots:
    void savePoints();
    void savePointsAs(); 
 
-   void addKrestRX( QPointF F = QPointF(-1,-1) );  //! добавление крестов
+   void addKrestRX( QPointF F = QPointF(-1,-1) );  //! РґРѕР±Р°РІР»РµРЅРёРµ РєСЂРµСЃС‚РѕРІ
    void addKrestLX( QPointF F = QPointF(-1,-1) );
    void addKrestUY( QPointF F = QPointF(-1,-1) );
    void addKrestDY( QPointF F = QPointF(-1,-1) );
    void changeCoord(double x,double y);
-   void changeFrameSize(int);//задание размера рамки в пикселх
+   void changeFrameSize(int);//Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° СЂР°РјРєРё РІ РїРёРєСЃРµР»С…
    void changeFrameSize(double); 
    void cursorCross();
    void cursorHand ();
@@ -100,18 +100,18 @@ private slots:
    //void ctrlZ_Cut();
    //void ctrlZ_All_Cut();   
    //void updateCoord(QPointF,QPointF);
-   void del();   //! удаление
-   //void show_position_on_shot(double c,double r); //! отображение координат курсора
-   void updateActions(); //! обновление действий
+   void del();   //! СѓРґР°Р»РµРЅРёРµ
+   //void show_position_on_shot(double c,double r); //! РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚ РєСѓСЂСЃРѕСЂР°
+   void updateActions(); //! РѕР±РЅРѕРІР»РµРЅРёРµ РґРµР№СЃС‚РІРёР№
    void pickAllKrest( );   //catch all krest
-   //!слот запуска рассчета
+   //!СЃР»РѕС‚ Р·Р°РїСѓСЃРєР° СЂР°СЃСЃС‡РµС‚Р°
    //void pressed_button_run ();
    //void pressed_button_run2();
    void run_process();
    void ShowPixel   (QPointF const&Pixel) ;
-   void SetPixelSize();  //задание размера пикселЯ в мм
-   void SetFrameSizeMm();//задание размера рамки в мм
-   void SetFrameSizePx();//задание размера рамки в пикселЯх
+   void SetPixelSize();  //Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° РїРёРєСЃРµР»СЏ РІ РјРј
+   void SetFrameSizeMm();//Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° СЂР°РјРєРё РІ РјРј
+   void SetFrameSizePx();//Р·Р°РґР°РЅРёРµ СЂР°Р·РјРµСЂР° СЂР°РјРєРё РІ РїРёРєСЃРµР»СЏС…
    void SaveTrAs();
    void SaveTr();
    void ScaleFit(){graphicsView->fitInView(scene->itemsBoundingRect(),Qt::KeepAspectRatio);} ;
@@ -126,19 +126,19 @@ private:;
 protected:
     //void updateRubberBandRegion();
     //void wheelEvent(QWheelEvent *event);
-   	//! отработка нажатия на кнопку мыши
+   	//! РѕС‚СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёВ¤ РЅР° РєРЅРѕРїРєСѓ РјС‹С€Рё
     virtual void	mousePressEvent ( QGraphicsSceneMouseEvent * event );
     //virtual void	mousePressEvent ( QMouseEvent * event );
-  	//! отработка отпускания на кнопки мыши
+  	//! РѕС‚СЂР°Р±РѕС‚РєР° РѕС‚РїСѓСЃРєР°РЅРёВ¤ РЅР° РєРЅРѕРїРєРё РјС‹С€Рё
     virtual void	mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
     //virtual void	mouseReleaseEvent ( QMouseEvent * event );
-   	//! отработка сигнала перемещения мыши  
+   	//! РѕС‚СЂР°Р±РѕС‚РєР° СЃРёРіРЅР°Р»Р° РїРµСЂРµРјРµС‰РµРЅРёВ¤ РјС‹С€Рё  
     //virtual void	mouseMoveEvent ( QMouseEvent * event );   
    	//virtual void	mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
-   	//! отработка нажатия на кнопки
+   	//! РѕС‚СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёВ¤ РЅР° РєРЅРѕРїРєРё
     //virtual void keyPressEvent ( QKeyEvent * event );
 signals:;
-    //! сигнал о положении курсора на снимке
+    //! СЃРёРіРЅР°Р» Рѕ РїРѕР»РѕР¶РµРЅРёРё РєСѓСЂСЃРѕСЂР° РЅР° СЃРЅРёРјРєРµ
     //void position_on_shot(double c,double r);
 };
 

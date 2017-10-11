@@ -24,24 +24,24 @@ GDAL_DIR="C:/warmerda/bld"
 MYLIB_DIR = D:/projects/Anton/include
 ############################################################
 
-# расширение для объектных файлов
+# СЂР°СЃС€РёСЂРµРЅРёРµ РґР»СЏ РѕР±СЉРµРєС‚РЅС‹С… С„Р°Р№Р»РѕРІ
 ext_obj=obj
 
-# команда удаления файлов
+# РєРѕРјР°РЅРґР° СѓРґР°Р»РµРЅРёСЏ С„Р°Р№Р»РѕРІ
 command_del= rm -f
 
 SD=\\
 
 
-# знак для задания имени файла в include make
+# Р·РЅР°Рє РґР»СЏ Р·Р°РґР°РЅРёСЏ РёРјРµРЅРё С„Р°Р№Р»Р° РІ include make
 opt_f_b=<
 opt_f_e=>
-# опция для задания директорий с заголовочными файлами
+# РѕРїС†РёСЏ РґР»СЏ Р·Р°РґР°РЅРёСЏ РґРёСЂРµРєС‚РѕСЂРёР№ СЃ Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹РјРё С„Р°Р№Р»Р°РјРё
 opt_inc=/I
-# опиция f для make
+# РѕРїРёС†РёСЏ f РґР»СЏ make
 opt_make_f=-f
 
-# основные библиотеки windows
+# РѕСЃРЅРѕРІРЅС‹Рµ Р±РёР±Р»РёРѕС‚РµРєРё windows
 library=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib imm32.lib winmm.lib wsock32.lib opengl32.lib glu32.lib 
 
 #DEBUG=yes
@@ -63,7 +63,7 @@ else
 #	$(QT_DIR_VER)\lib\Qt3Support4.lib $(QT_DIR_VER)\lib\QtOpenGL4.lib $(QT_DIR_VER)\lib\QtXml4.lib
 
 endif
-# библиотеки Qt 3.x
+# Р±РёР±Р»РёРѕС‚РµРєРё Qt 3.x
 #library=$(library) \
 #			$(QT_DIR_VER)\lib\qtmain.lib $(QT_DIR_VER)\lib\qt-mt.lib $(QT_DIR_VER)\lib\qui.lib
 
@@ -100,7 +100,7 @@ library+=\
 			$(CVLIB_DIR)/lib/cxcore.lib
 endif			
 
-# опиции для компилятора С++  /RTC1 /Qopenmp
+# РѕРїРёС†РёРё РґР»СЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° РЎ++  /RTC1 /Qopenmp
 ifdef DEBUG
 cpp_options=  /EHs /GR /D "WIN32"  /D "DEBUG" /D "_CONSOLE"  /D "WIN32API"  \
 				/D "_CRT_SECURE_NO_DEPRECATE"   \
@@ -118,7 +118,7 @@ ifdef USE_DEVCONTROL
 cpp_options += /D "USE_DEVCONTROL"
 endif
 
-# опиции для компилятора С++ intel 64 /Qopenmp
+# РѕРїРёС†РёРё РґР»СЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° РЎ++ intel 64 /Qopenmp
 #cpp_options=  /EHs /GR /D "WIN64"  /D "_MBCS"   /D "_CONSOLE"  /D "UNICODE" \
 #				/D "_CRT_SECURE_NO_DEPRECATE"   \
 #				/D "__MSVC_RUNTIME_CHECKS"  \
@@ -127,11 +127,11 @@ endif
 
 				
 # /D "_VC60"				
-#опиции для компилятора С++ для работы с Qt 4.x
+#РѕРїРёС†РёРё РґР»СЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° РЎ++ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Qt 4.x
 qt_options= /D "QT3_SUPPORT" /D "QT_DLL" /D "QT_THREAD_SUPPORT" \
 	/D "QT_LARGEFILE_SUPPORT" /D "QT_EDITION=QT_EDITION_DESKTOP" /D "QT_GUI_LIB" /D "QT_CORE_LIB" 	
 
-#опиции для компилятора С++ для работы с Qt 3.x
+#РѕРїРёС†РёРё РґР»СЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° РЎ++ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Qt 3.x
 #qt_options= /D "QT_THREAD_SUPPORT" /D "QT_NO_DEBUG"\
 #	/D "QT_LARGEFILE_SUPPORT" /D "QT_EDITION=QT_EDITION_DESKTOP" 
 
@@ -144,7 +144,7 @@ qt_options+= \
 	$(opt_inc) "$(QT_DIR_VER)/include/QtNetwork" \
 	$(opt_inc) "$(QT_DIR_VER)/include/QtXml" 
 
-# установки для cuda
+# СѓСЃС‚Р°РЅРѕРІРєРё РґР»СЏ cuda
 cpp_options_cuda=$(opt_inc) "$(CUDA_DIR)/include"
 
 ifdef USE_CUDA

@@ -112,8 +112,8 @@ bool RubberRect::change_coord(QPointF point,int corner) {
    
    switch(corner) {
     case 1:
-      if (max_imgRect.topLeft().x()>point.x()) //îòñëåæèâàåòñÿ âûõîä 
-        point.setX(max_imgRect.topLeft().x()); //çà ãðàíèöó ðàñòðà
+      if (max_imgRect.topLeft().x()>point.x()) //Ð¾Ñ‚ÑÐ»ÐµÐ¶Ð¸Ð²Ð°ÐµÑ‚ÑÑ Ð²Ñ‹Ñ…Ð¾Ð´ 
+        point.setX(max_imgRect.topLeft().x()); //Ð·Ð° Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñƒ Ñ€Ð°ÑÑ‚Ñ€Ð°
       if (max_imgRect.topLeft().y()>point.y()) 
         point.setY(max_imgRect.topLeft().y());      
         setP1(point);    
@@ -251,7 +251,7 @@ QVariant Node::itemChange(GraphicsItemChange change,
 //    rect.translate(-rect.center());
     rect.translate(-3.2,4.65);
     return rect;    
-      //ðèñóåì êðåñòèê
+      //Ñ€Ð¸ÑÑƒÐµÐ¼ ÐºÑ€ÐµÑÑ‚Ð¸Ðº
   //  painter->setBrush(myKrestColor);
  //   QLine vline()
 //    QRectF rect = metrics.boundingRect(myText);

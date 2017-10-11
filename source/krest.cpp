@@ -137,7 +137,7 @@ void Krest::paint(QPainter *painter,
     //QRectF rect1 = metrics.boundingRect(myText);
 
     painter->drawRoundedRect(rect,25,25);   
-    //ËÒÛÂÏ ÍÂÒÚËÍ
+    //—Ä–∏—Å—É–µ–º –∫—Ä–µ—Å—Ç–∏–∫
     //painter->setBrush(myKrestColor);
     //QLine 
 
@@ -153,7 +153,7 @@ void Krest::paint(QPainter *painter,
     pointPairs.clear () ;
     pointPairs << QPoint (25,0) << QPoint (-25,0) ;
     painter->drawLines(pointPairs) ;
-    coord = this->pos();  //! ÒÓı‡ÌÂÌËÂ ÍÓÓ‰ËÌ‡Ú
+    coord = this->pos();  //! —Å–æ—Ö—Ä–∞–Ω–µ–Ω–∏–µ –∫–æ–æ—Ä–¥–∏–Ω–∞—Ç
     //std::cout<<coord.x()<<" "<<coord.y()<<std::endl;
 
  /* int s,sm;
@@ -177,7 +177,7 @@ void Krest::paint(QPainter *painter,
 void Krest::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     QString text = QInputDialog::getText(event->widget(),
-                           tr("»ÁÏÂÌÂÌËÂ ÚÂÍÒÚ‡"), tr("¬‚Â‰ËÚÂ ÚÂÍÒÚ:"),
+                           tr("¬ª–∑–º–µ–Ω–µ–Ω–∏–µ —Ç–µ–∫—Å—Ç–∞"), tr("¬¨–≤–µ–¥–∏—Ç–µ —Ç–µ–∫—Å—Ç:"),
                            QLineEdit::Normal, myText);
     if (!text.isEmpty())
         setText(text);
@@ -203,7 +203,7 @@ QRectF Krest::outlineRect() const
     // rect.translate(-rect.center());
     rect.translate(-3.2,4.65);
     return rect;    
-    // ËÒÛÂÏ ÍÂÒÚËÍ
+    // —Ä–∏—Å—É–µ–º –∫—Ä–µ—Å—Ç–∏–∫
     // painter->setBrush(myKrestColor);
     // QLine vline()
     // QRectF rect = metrics.boundingRect(myText);

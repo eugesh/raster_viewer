@@ -5,9 +5,9 @@
 #define MAX_SIZE_BLOCK 4096
 //#include "transformation.h"
 //#include "form_mainwindow_krest.h"
-//! класс, описывающий нить расчетов 
+//! РєР»Р°СЃСЃ, РѕРїРёСЃС‹РІР°СЋС‰РёР№ РЅРёС‚СЊ СЂР°СЃС‡РµС‚РѕРІ 
 /*!
-Описание нити
+СњРїРёСЃР°РЅРёРµ РЅРёС‚Рё
 */
 double roundD(double x);
 class settings {
@@ -30,7 +30,7 @@ class CThread : public QThread , public settings {
 public: ;
   QProgressBar *progressbar;
 public:;
-	//! конструктор
+	//! РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	CThread( QObject *parent = NULL ) ;
   virtual ~CThread() {;} ;
 
@@ -38,7 +38,7 @@ protected: ;
   virtual void run();
   virtual void run1();
 signals:;
-	 //! посылка сигнала с количеством обработанных фрагментов изображениЯ
+	 //! РїРѕСЃС‹Р»РєР° СЃРёРіРЅР°Р»Р° СЃ РєРѕР»РёС‡РµСЃС‚РІРѕРј РѕР±СЂР°Р±РѕС‚Р°РЅРЅС‹С… С„СЂР°РіРјРµРЅС‚РѕРІ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	 void number_worked_file(int nf);
 };
 

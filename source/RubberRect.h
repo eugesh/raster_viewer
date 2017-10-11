@@ -17,7 +17,7 @@ public:
     bool cutting;
     bool bmove;
     int corner;
-    int thickness;//толщина
+    int thickness;//С‚РѕР»С‰РёРЅР°
     QPointF Center;
     QRectF max_imgRect;
     int  changed_corner(QPointF pos);
@@ -37,9 +37,9 @@ public:
     // void setSize(QSizeF s)  {sizeF = s};   
 protected:
   	virtual void	mousePressEvent ( QGraphicsSceneMouseEvent * event );
-  	//! отработка отпускания на кнопки мыши
+  	//! РѕС‚СЂР°Р±РѕС‚РєР° РѕС‚РїСѓСЃРєР°РЅРёСЏ РЅР° РєРЅРѕРїРєРё РјС‹С€Рё
   	virtual void	mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
-   	//! отработка сигнала перемещения мыши  
+   	//! РѕС‚СЂР°Р±РѕС‚РєР° СЃРёРіРЅР°Р»Р° РїРµСЂРµРјРµС‰РµРЅРёСЏ РјС‹С€Рё  
    	virtual void	mouseMoveEvent ( QGraphicsSceneMouseEvent * event ); 
     //QVariant itemChange(GraphicsItemChange change,
     //                        const QVariant &value);

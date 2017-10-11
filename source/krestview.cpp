@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "krestview.h"
-//! конструктор
+//! РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 KrestView::KrestView(QWidget *parent)
     : QGraphicsView(parent)
 {
@@ -24,14 +24,14 @@ KrestView::KrestView(QWidget *parent)
     //viewport()->setCursor(Qt::CrossCursor);
     //c_L=r_L=0;
 } 
-//! отработка поворота колесика мыши
+//! РѕС‚СЂР°Р±РѕС‚РєР° РїРѕРІРѕСЂРѕС‚Р° РєРѕР»РµСЃРёРєР° РјС‹С€Рё
 void KrestView::wheelEvent(QWheelEvent *event)
 {
   if (!is_move) {
   QPoint  pos;
   double x,y;
   double r,c;
-  // не в режиме перемещения
+  // РЅРµ РІ СЂРµР¶РёРјРµ РїРµСЂРµРјРµС‰РµРЅРёСЏ
   int delta;
 
   delta=event->delta();
@@ -49,7 +49,7 @@ void KrestView::wheelEvent(QWheelEvent *event)
   // x0=x-scaled*c;
   // y0=y+scaled*r;
 
-  // посылка сигнала о изменении масштаба
+  // РїРѕСЃС‹Р»РєР° СЃРёРіРЅР°Р»Р° Рѕ РёР·РјРµРЅРµРЅРёРё РјР°СЃС€С‚Р°Р±Р°
   // emit change_scale(scale);
   
     double numDegrees = event->delta() / 8.0;
@@ -163,7 +163,7 @@ void KrestView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-//! отработка сигнала перемещения мыши
+//! РѕС‚СЂР°Р±РѕС‚РєР° СЃРёРіРЅР°Р»Р° РїРµСЂРµРјРµС‰РµРЅРёСЏ РјС‹С€Рё
 /*void KrestView::mouseMoveEvent ( QMouseEvent * event )
 {
  /*if (is_move) {
@@ -209,14 +209,14 @@ void KrestView::mouseReleaseEvent(QMouseEvent *event)
 
 //   emit position_on_shot(c_R,r_R);
 //   is_draw_only_curcor=true;
-   // перерисовка окна
+   // РїРµСЂРµСЂРёСЃРѕРІРєР° РѕРєРЅР°
   
   };*/
 
 // }; 
 //} 
 
-//! отработка нажатия на кнопку мыши
+//! РѕС‚СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РЅР° РєРЅРѕРїРєСѓ РјС‹С€Рё
 /*void KrestView::mousePressEvent ( QMouseEvent * event )
 {
 //    setDragMode(ScrollHandDrag); 
@@ -229,12 +229,12 @@ void KrestView::mouseReleaseEvent(QMouseEvent *event)
   switch(event->button()) {
    case Qt::LeftButton:
     {
-     // установка режима перемещения
+     // СѓСЃС‚Р°РЅРѕРІРєР° СЂРµР¶РёРјР° РїРµСЂРµРјРµС‰РµРЅРёСЏ
 //     std::cout<<"drag!";
      is_move=true;
-     // запоминание положения точки где было нажатие
+     // Р·Р°РїРѕРјРёРЅР°РЅРёРµ РїРѕР»РѕР¶РµРЅРёСЏ С‚РѕС‡РєРё РіРґРµ Р±С‹Р»Рѕ РЅР°Р¶Р°С‚РёРµ
       pressed_left_button=event->pos();
-     // установка курсора
+     // СѓСЃС‚Р°РЅРѕРІРєР° РєСѓСЂСЃРѕСЂР°
 //     prev_curcor=this->cursor ();
      this->setCursor(Qt::ClosedHandCursor);
      setDragMode(QGraphicsView::ScrollHandDrag);      
@@ -255,7 +255,7 @@ void KrestView::mouseReleaseEvent(QMouseEvent *event)
  };
 //}
 
-//! отработка отпускания на кнопки мыши
+//! РѕС‚СЂР°Р±РѕС‚РєР° РѕС‚РїСѓСЃРєР°РЅРёСЏ РЅР° РєРЅРѕРїРєРё РјС‹С€Рё
 void KrestView::mouseReleaseEvent ( QMouseEvent * event )
 {
 // Qt::KeyboardModifiers modif;
@@ -266,17 +266,17 @@ void KrestView::mouseReleaseEvent ( QMouseEvent * event )
   std::cout<<"drop!";
   if (event->button()==Qt::LeftButton) {
    QPoint delta;
-   //сброс режима перемещения
+   //СЃР±СЂРѕСЃ СЂРµР¶РёРјР° РїРµСЂРµРјРµС‰РµРЅРёСЏ
    is_move=false;
-   // получение координаты точки
+   // РїРѕР»СѓС‡РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё
    delta=event->pos()-pressed_left_button;
-   // пересчет области просмотра
+   // РїРµСЂРµСЃС‡РµС‚ РѕР±Р»Р°СЃС‚Рё РїСЂРѕСЃРјРѕС‚СЂР°
    //printf("dx=%d dy=%d\n",delta.x(),delta.y());
    x0+=delta.x();
    y0+=-delta.y();
-   // сброс курсора
+   // СЃР±СЂРѕСЃ РєСѓСЂСЃРѕСЂР°
    this->setCursor(prev_curcor);
-   // перерисовка окна
+   // РїРµСЂРµСЂРёСЃРѕРІРєР° РѕРєРЅР°
         update();
         updateGeometry();   
 
@@ -291,7 +291,7 @@ void KrestView::mouseReleaseEvent ( QMouseEvent * event )
      break;
     case Qt::RightButton:
      {
-      // вызов контекстного меню
+      // РІС‹Р·РѕРІ РєРѕРЅС‚РµРєСЃС‚РЅРѕРіРѕ РјРµРЅСЋ
      };
      break;   
    };
@@ -299,7 +299,7 @@ void KrestView::mouseReleaseEvent ( QMouseEvent * event )
  };*/
 
 /* if (Qt::BlankCursor==cursor ().shape ()) {
-  // сброс курсора
+  // СЃР±СЂРѕСЃ РєСѓСЂСЃРѕСЂР°
   this->setCursor(prev_curcor);  
  };  
 }
@@ -348,7 +348,7 @@ void KrestView::mouseReleaseEvent ( QMouseEvent * event )
  emit position_on_shot(1, c_L,r_L);
  emit position_on_shot(2, c_R,r_R);
 // is_draw_only_curcor=true;
- // перерисовка окна
+ // РїРµСЂРµСЂРёСЃРѕРІРєР° РѕРєРЅР°
  
  //printf("name_keys=%s\n",name_keys.toLocal8Bit().data());
 
