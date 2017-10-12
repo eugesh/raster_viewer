@@ -1,74 +1,72 @@
 #include <QtGui>
 #include <cmath>
 #include <iostream>
-
 #include "krestview.h"
-//! конструктор
-KrestView::KrestView(QWidget *parent)
+
+
+//! Конструктор
+KrestView::KrestView( QWidget *parent )
     : QGraphicsView(parent)
 {
-    //QCursor(Qt::CrossCursor);
-    //setCursor(Qt::CrossCursor);
-    setDragMode(QGraphicsView::ScrollHandDrag);  
-    dr=dc=0;
-    x0=0;
-    y0=height();
-    is_move=false;
-    HEIGHT_WINDOW=height();
-    WIDTH_WINDOW=width();
-    scaled=1.0;
+    setDragMode( QGraphicsView::ScrollHandDrag );
+    dr = dc = 0;
+    x0 = 0;
+    y0 = height();
+    is_move = false;
+    HEIGHT_WINDOW = height();
+    WIDTH_WINDOW = width();
+    scaled = 1.0;
     cutting = false;
-    //rubberBandIsShown = false;
     setMouseTracking(true);
-    //connect(KVpushButtonFit,SIGNAL(clicked()),SLOT(ScaleFit()));
-    //viewport()->setCursor(Qt::CrossCursor);
-    //c_L=r_L=0;
-} 
-//! отработка поворота колесика мыши
-void KrestView::wheelEvent(QWheelEvent *event)
-{
-  if (!is_move) {
-  QPoint  pos;
-  double x,y;
-  double r,c;
-  // не в режиме перемещения
-  int delta;
-
-  delta=event->delta();
-
-  pos=event->pos();
-  x=pos.x();
-  y=pos.y();
-
-  c=(x-x0)/scaled;
-  r=(y0-y)/scaled;
-
-  // if (delta>0) scaled=scaled*2;
-  // else scaled=scaled/2;
-
-  // x0=x-scaled*c;
-  // y0=y+scaled*r;
-
-  // посылка сигнала о изменении масштаба
-  // emit change_scale(scale);
-  
-    double numDegrees = event->delta() / 8.0;
-    double numSteps = numDegrees / 15.0;
-    //double factor = std::pow(1.125, numSteps);
-    scaled = std::pow(1.125, numSteps);
-    //this->scale(factor, factor);
-    this->scale(scaled, scaled);
-    x0=x-scaled*c;
-    y0=y+scaled*r;
-  }
 }
 
+
+//! Oтработка поворота колесика мыши.
+void KrestView::wheelEvent( QWheelEvent *event )
+{
+    // Не в режиме перемещения.
+    if (!is_move) {
+        QPoint pos;
+        double x, y;
+        double r, c;
+
+        int delta;
+
+        delta = event->delta();
+
+        pos = event->pos();
+        x = pos.x();
+        y = pos.y();
+
+        c = (x - x0) / scaled;
+        r = (y0 - y) / scaled;
+  
+        double numDegrees = event->delta() / 8.0;
+        double numSteps = numDegrees / 15.0;
+        scaled = std::pow(1.125, numSteps);
+        this->scale(scaled, scaled);
+        x0 = x - scaled * c;
+        y0 = y + scaled * r;
+    }
+}
+
+
+void KrestView::mouseMoveEvent( QMouseEvent * event )
+{
+    double x, y;
+    x = event->pos().x();
+    y = event->pos().y();
+    emit position_on_shot(x, y);
+    QGraphicsView::mouseMoveEvent(event);
+}
+
+
 /*void KrestView::mousePressEvent ( QGraphicsSceneMouseEvent * event )
-{   
+{
    if(cutting) {
       QRect rect(Margin, Margin,
                  width() - 2 * Margin, height() - 2 * Margin);
-  
+
       if (event->button() == Qt::LeftButton) {
           if (rect.contains(event->pos().toPoint ())) {
               rubberBandIsShown = true;
@@ -81,19 +79,7 @@ void KrestView::wheelEvent(QWheelEvent *event)
   }
 }
 */
-void KrestView::mouseMoveEvent ( QMouseEvent * event )
-{
-   /* if (rubberBandIsShown) {
-        updateRubberBandRegion();
-        rubberBandRect.setBottomRight(event->pos().toPoint ());
-        updateRubberBandRegion();
-    }*/
-    double x,y;
-    x=event->pos().x();
-    y=event->pos().y();    
-    emit position_on_shot(x,y);
-    QGraphicsView::mouseMoveEvent(event);
-}
+
 
 /*void KrestView::mousePressEvent ( QMouseEvent * event )
 {   

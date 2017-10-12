@@ -5,7 +5,7 @@
 #define MAX_SIZE_BLOCK 4096
 //#include "transformation.h"
 //#include "form_mainwindow_krest.h"
-//! класс, описывающий нить расчетов 
+//! класс, описывающий нить расчетов
 /*!
 ќписание нити
 */
@@ -36,7 +36,7 @@ public:;
 
 protected: ;
   virtual void run();
-  virtual void run1();
+  // virtual void run1();
 signals:;
 	 //! посылка сигнала с количеством обработанных фрагментов изображения
 	 void number_worked_file(int nf);

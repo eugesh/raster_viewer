@@ -71,24 +71,6 @@ cpp_options_include=$(opt_inc) "$(NIITP_CPP)/include" \
 							$(opt_inc) "$(source_dir)" \
 							$(opt_inc) "$(source_header_form_dir)"
 
-#							$(opt_inc) "$(source_raster_dir)" \
-#							
-#							$(opt_inc) "$(source_shot_dir)" \
-#							$(opt_inc) "$(source_geom_dir)" \
-#							$(opt_inc) "$(source_network_dir)" \
-#							$(opt_inc) "$(source_photogrammetry_dir)" \
-#							$(opt_inc) "$(source_tiff_dir)" \
-#							$(opt_inc) "$(base_dir)/lib" \
-#							$(opt_inc) "$(GIS_DIR)/include" \
-#							$(opt_inc) "$(source_gis_dir)" \
-#							$(opt_inc) "$(source_multi_shot_dir)" \
-#							$(opt_inc) "$(source_header_form_dir)"  \
-#							$(opt_inc) "$(source_cartographic_sc_dir)" \
-#							$(opt_inc) "$(source_ksoi_dir)" \
-#							$(opt_inc) "$(source_equiv_shot_dir)" \
-#							$(opt_inc) "$(source_module_link)" \
-#							$(opt_inc) "$(source_relief_dir)"
-
 ##############################################
 mylib_options_include =	$(opt_inc) "$(source_mylib_aux_dir)" \
 						$(opt_inc) "$(source_mylib_cuda_dir)" \
@@ -118,10 +100,6 @@ cpp_options_include+=\
 						$(opt_inc) "$(CVLIB_DIR)/cxcore/include" \
 						$(opt_inc) "$(CVLIB_DIR)/otherlibs/highgui"
 endif
-
-#mylib_options_include+=\
-#						$(opt_inc) "$(MYLIB_DIR)\image" \
-#						$(opt_inc) "$(MYLIB_DIR)"
 						
 ##############################################							
  
@@ -140,19 +118,12 @@ obj_file=\
 	$(obj_dir)/RubberRect.$(ext_obj)\
 	$(obj_dir)/Krest_scene.$(ext_obj)\
 	$(obj_dir)/cthread.$(ext_obj)
-#	$(obj_dir)/transformation.$(ext_obj)
-
-#	$(obj_dir)/auxqimage.$(ext_obj) \
-
-#	$(obj_dir)/cgdalraster.$(ext_obj)
-	
 
 # объектные файлы полученные из moc-файлов						
 obj_moc_file=\
 	$(obj_dir)/krest_window_moc.$(ext_obj)\
 	$(obj_dir)/krest_scene_moc.$(ext_obj)\
 	$(obj_dir)/cthread_moc.$(ext_obj)
-#	$(obj_dir)/transformation_moc.$(ext_obj)\
 
 # библиотечные модули
 library_obj_file=
@@ -167,7 +138,6 @@ all:
 clean:
 #	$(command_del) $(base_dir)$(SD)obj$(SD)*.$(ext_obj)
 #	$(command_del) $(base_dir)$(SD)library_obj$(SD)*.$(ext_obj)
-
 	$(command_del) $(base_dir)$(SD)moc$(SD)*moc.cpp
 	$(command_del) $(obj_file)
 	$(command_del) $(obj_moc_file)
@@ -192,10 +162,7 @@ $(moc_dir)/krest_scene_moc.cpp : $(source_dir)/Krest_scene.h
 $(moc_dir)/cthread_moc.cpp : $(source_dir)/cthread.h
 	$(MOC) -o $@ $?
 
-#$(moc_dir)/transformation_moc.cpp : $(source_dir)/transformation.h
-#	$(MOC) -o $@ $?
-
-#kompiliatia moc failov
+# .moc files compilation
 
 $(obj_dir)/krest_window_moc.$(ext_obj) : $(moc_dir)/krest_window_moc.cpp
 	$(command_comp)
@@ -205,16 +172,6 @@ $(obj_dir)/krest_scene_moc.$(ext_obj) : $(moc_dir)/krest_scene_moc.cpp
 
 $(obj_dir)/cthread_moc.$(ext_obj) : $(moc_dir)/cthread_moc.cpp
 	$(command_comp)
-
-#$(obj_dir)/transformation_moc.$(ext_obj) : $(moc_dir)/transformation_moc.cpp
-#	$(command_comp)
-# исходные файлы
-
-#$(obj_dir)/auxqimage.$(ext_obj) : $(source_mylib_aux_dir)/auxqimage.cpp 
-#	$(command_comp)
-
-#$(obj_dir)/cgdalraster.$(ext_obj) : $(source_dir)/cgdalraster.cpp
-#	$(command_comp)
 
 $(obj_dir)/Krest_window.$(ext_obj) : $(source_dir)/Krest_window.cpp
 	$(command_comp)	
@@ -237,23 +194,7 @@ $(obj_dir)/Krest_scene.$(ext_obj) : $(source_dir)/Krest_scene.cpp
 $(obj_dir)/cthread.$(ext_obj) : $(source_dir)/cthread.cpp
 	$(command_comp)	
 
-#$(obj_dir)/transformation.$(ext_obj) : $(source_dir)/transformation.cpp
-#	$(command_comp)
-
-#$(obj_dir)/cu_func.$(ext_obj) : $(source_dir)/cu_func.cu
-#	$(command_comp_cuda)
-
-#$(obj_dir)/cthread_moc.$(ext_obj) : $(moc_dir)/cthread_moc.cpp
-#	$(command_comp)	
-	
-
 ######################################################
-
-#  подключение дополнительных моделей
-#include $(source_mylib_correlator_dir)/correlator.mak
-#include $(source_mylib_math_la_dir)/la.mak
-#include $(base_dir)/makefile_lib.mak
-#include  $(source_cartographic_sc_dir)/cartographic_sc.mak
 
 include $(source_graphic_item_image)/graphic_item_image.mak
 

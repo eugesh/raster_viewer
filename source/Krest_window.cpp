@@ -19,6 +19,7 @@
 #define DEBUG 0
 #define MAX_SIZE_BLOCK 4096
 
+
 KrestWindow::KrestWindow() {
 	setupUi(this);
 	KrestXL.setText(tr("X-"));
@@ -29,40 +30,25 @@ KrestWindow::KrestWindow() {
 	RR = NULL;
 	pushButtonFit=NULL;
 
-	//nameIn = img_path+img_name;//+".bmp";
-	//nameImgInit = nameIn;
-	//QString dest_path = "./transform";
-	//QDir out_dir(dest_path);
-	//if(!out_dir.exists()) {//если нет такой папки, то она создаетсЯ
-	//   out_dir.mkdir(dest_path);
-	//}
-	//nameOut=img_name+"_tr";//img_name+"_tr";
-	//pathOut="./transform/";//img_path
 	scene = new KrestScene;
 	pushButtonFit = new QAction(this);
 	pushButtonFit->setText(QObject::tr("Вписать в окно"));
-	//setMouseTracking(true);
 	graphicsView->setScene(scene);
-	//graphicsView->setPushButtonFit(pushButtonFit);
+	// graphicsView->setPushButtonFit(pushButtonFit);
 	graphicsView->setRenderHints(QPainter::Antialiasing|QPainter::TextAntialiasing);
 	graphicsView->setContextMenuPolicy(Qt::ActionsContextMenu);
-	graphicsView->setDragMode(QGraphicsView::ScrollHandDrag); //перетаскивание окна рукой
+	graphicsView->setDragMode(QGraphicsView::ScrollHandDrag); // Перетаскивание окна рукой
 	QGI_Image = new QGraphicsItem_Image;
-	//QGI_Image->set_image(nameIn);
 	scene->addItem(QGI_Image);
-	//QGraphicsRectItem *QBlackFillRect;
-	QColor blackColor(0,0,0);
+	QColor blackColor(0, 0, 0);
 	QPen blackPen(blackColor);
 	QBrush blackBrash(blackColor);
-	//QBlackFillRect=scene->addRect(QGI_Image->boundingRect(), blackPen,blackBrash);
 	QGI_Image->setZValue(-1000.0);
-	//QBlackFillRect->setZValue(-1001.0);
 	createActions();
-	//createMenus();
 
 	connect(scene, SIGNAL(selectionChanged()),
 	        this, SLOT(updateActions()));
-	//connect(graphicsView, SIGNAL(position_on_shot(double,double)),
+	// connect(graphicsView, SIGNAL(position_on_shot(double,double)),
 	//        this, SLOT(changeCoord(double,double)));
 	// connect(scene,SIGNAL(CurrentPixel(QPointF const&)),
 	//       this,SLOT(ShowPixel(QPointF const&)));
@@ -93,51 +79,44 @@ KrestWindow::KrestWindow() {
 	connect(scene,SIGNAL(ScaleRubberSignal(QRect)),this,SLOT(ScaleRubberFit(QRect)));
 	updateActions();
 };
+
+
 KrestWindow::~KrestWindow() {
-   /*delete scene;
-   delete QGI_Image;
-   delete QIDSFSMm;
-   delete QIDSFSPx;
-   QList<QGraphicsItem*>items=scene->selectedItems();
-      //qDeleteAll(items);
-   QGraphicsItem *item;
-   Krest * krest;
-   foreach(item,items) {
-      krest = dynamic_cast<Krest *>(item);
-      delete krest;
-   }*/
-   if(RR!=NULL)
-    delete RR;
-   if(pushButtonFit!=NULL)
-    delete pushButtonFit;
+   if(RR != NULL)
+       delete RR;
+   if(pushButtonFit != NULL)
+       delete pushButtonFit;
 }
+
+
 void KrestWindow::changeFrameSize(int size) {
-   FrameSizePx=size;
+   FrameSizePx = size;
    if(cutting) {
       RR->SetSize(FrameSizePx);      
    }
    updateActions( );
 }
 
+
 void KrestWindow::changeFrameSize(double size) {
-   FrameSizeMm=size;
-   FrameSizePx=(int)ceil(FrameSizeMm/PixelSize);
+   FrameSizeMm = size;
+   FrameSizePx = (int)ceil(FrameSizeMm / PixelSize);
    if(cutting) {
       RR->SetSize(FrameSizePx);      
    }
    updateActions();
 }
 
-void 
-KrestWindow::ShowPixel( QPointF const&Pixel ) {
 
- // QString Text = "[ " + QString::number(int(Pixel.x())) + ", "
-   //                   + QString::number(int(Pixel.y())) + " ]" ;
- // label_pixel->setText(Text) ;
+void 
+KrestWindow::ShowPixel(QPointF const&Pixel) {
+    // QString Text = "[ " + QString::number(int(Pixel.x())) + ", "
+    //                   + QString::number(int(Pixel.y())) + " ]" ;
+    // label_pixel->setText(Text) ;
 } ;
 
-void KrestWindow::addKrestRX(QPointF F)
-{
+
+void KrestWindow::addKrestRX(QPointF F) {
     Krest * krest;
     QList<QGraphicsItem *> items = scene->items( );
     foreach (QGraphicsItem *item, items) {
@@ -151,6 +130,7 @@ void KrestWindow::addKrestRX(QPointF F)
     krest->setText(tr("%1").arg("+X"));
     setupKrest(krest,F);
 }
+
 
 void KrestWindow::addKrestLX(QPointF F)
 {
@@ -168,6 +148,7 @@ void KrestWindow::addKrestLX(QPointF F)
     setupKrest(krest,F);
 }
 
+
 void KrestWindow::addKrestUY(QPointF F)
 {
     Krest * krest;
@@ -183,6 +164,7 @@ void KrestWindow::addKrestUY(QPointF F)
     krest->setText(tr("%1").arg("+Y"));
     setupKrest(krest,F);
 }
+
 
 void KrestWindow::addKrestDY(QPointF F)
 {
@@ -200,6 +182,7 @@ void KrestWindow::addKrestDY(QPointF F)
     setupKrest(krest,F);
 }
 
+
 void KrestWindow::pickAllKrest( ) {
     QList<QGraphicsItem *> allItems = scene->items ();
     QGraphicsItem *item;
@@ -207,8 +190,8 @@ void KrestWindow::pickAllKrest( ) {
           item->setSelected(true);
 }
 
-void KrestWindow::setupKrest(Krest *krest,QPointF F)
-{
+
+void KrestWindow::setupKrest(Krest *krest,QPointF F) {
     QPointF curs;
     QPointF newpos;
       curs = scene->cursor_scene_pos();
@@ -219,23 +202,21 @@ void KrestWindow::setupKrest(Krest *krest,QPointF F)
        krest->setPos(F); 
    
     krest->coord = krest->scenePos ();  //! сохранение координат
-    //std::cout<<krest->coord.x()<<" "<<krest->coord.y()<<std::endl; 
     scene->addItem(krest);
     krest->setZValue(0.0);
     scene->clearSelection();
     krest->setSelected(true);
 }
 
-void KrestWindow::updateActions()
-{
+
+void KrestWindow::updateActions() {
     bool hasSelection = !scene->selectedItems().isEmpty();
     bool isNode = (selectedKrest() != 0);
 
     action_Delete->setEnabled(hasSelection);
     actionCross->setEnabled(!hasSelection);
     actionHand->setEnabled(!hasSelection);
-    //actionRectangle->setEnabled(!hasSelection);
-    {//! add action to context menu !!!!!!!!!
+    {//! Add action to context menu.
        foreach (QAction *action, graphicsView->actions())
            graphicsView->removeAction(action);
    
@@ -266,29 +247,29 @@ void KrestWindow::updateActions()
              count++;
           }      
       }
-        // break;
         if(count==4) { //если все кресты установлены, пересчитать положение центра рамки
-           QVector3D ro[4],roIN[4];
-           QVector3D e1,e2,b,rc;
-           QVector3D la1,la2,la;
-           double r0,c0;
+           QVector3D ro[4], roIN[4];
+           QVector3D e1, e2, b, rc;
+           QVector3D la1, la2, la;
+           double r0, c0;
          
-           ro[0]=QVector3D(YD.x(),YD.y(),0);   //!!координаты крестов->QVector3D
-           ro[1]=QVector3D(YU.x(),YU.y(),0);   //  1
-           ro[2]=QVector3D(XL.x(),XL.y(),0);   //2   3
-           ro[3]=QVector3D(XR.x(),XR.y(),0);   //  0
-           e1=ro[3]-ro[2];  //направлениЯ осей координат ГеоСК 
-           e2=ro[1]-ro[0];  //во входном снимке
+           ro[0] = QVector3D(YD.x(), YD.y(), 0);   //!!координаты крестов->QVector3D
+           ro[1] = QVector3D(YU.x(), YU.y(), 0);   //  1
+           ro[2] = QVector3D(XL.x(), XL.y(), 0);   //2   3
+           ro[3] = QVector3D(XR.x(), XR.y(), 0);   //  0
+           e1 = ro[3] - ro[2];  //направлениЯ осей координат ГеоСК
+           e2 = ro[1] - ro[0];  //во входном снимке
          
-           e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
-           e2=e2.normalized ();
+           e1 = e1.normalized (); //нормированный базис ГеоСК входного снимка
+           e2 = e2.normalized ();
            
-           b =ro[0]-ro[2];      //
+           b = ro[0] - ro[2];      //
          
-           double e11,e12,e22,e1b,e2b;
-           double D,D1,t1;
-         
-           e11=QVector3D::dotProduct(e1,e1); //скалaрные произведениа
+           double e11, e12, e22, e1b, e2b;
+           double D, D1, t1;
+
+           // скалaрные произведениа
+           e11 = QVector3D::dotProduct(e1,e1);
            e12=QVector3D::dotProduct(e1,e2);
            e22=QVector3D::dotProduct(e2,e2);
            e1b=QVector3D::dotProduct(e1,b);
@@ -303,22 +284,15 @@ void KrestWindow::updateActions()
            Center=rc.toPointF();
 
            if(cutting) {
-              RR->setCenter ( Center );
-              //RR->SetSize(FrameSizePx);      
+              RR->setCenter (Center);
            }
-           /*if(!cutting) {
-              cutRect();
-              RR->SetSize(spinBox->value());
-           }*/
         }
-          //Center=QPointF();
     }
 }
 
 void KrestWindow::createActions( )
 {
     connect(action_Quit, SIGNAL(triggered()), this, SLOT(close()));
-    //connect(actionTransform,SIGNAL(triggered()),this,SLOT(pressed_button_run2()));  //траснсформирование
     connect(actionTransform,SIGNAL(triggered()),this,SLOT(run_process()));  //траснсформирование
     connect(action_OpenImage, SIGNAL(triggered()), this, SLOT(openImage()));
     connect(action_OpenImage, SIGNAL(triggered()), this, SLOT(endCut()));
@@ -340,7 +314,6 @@ void KrestWindow::createActions( )
     connect(actionPickAllKrest, SIGNAL(triggered()), this, SLOT(pickAllKrest()));
     //actionPickAllKrest->setShortcut(tr("Ctrl+A"));
     connect(actionRectangle_2, SIGNAL(triggered()), this, SLOT(cutRect()));
-    //connect(actionCut, SIGNAL(triggered()), this, SLOT(cutImage3()));
     connect(actionEndCut_2, SIGNAL(triggered()), this, SLOT(endCut()));
 
     //connect(actionCtrlZ_Cut, SIGNAL(triggered()), this, SLOT(ctrlZ_Cut()));
@@ -355,16 +328,13 @@ void KrestWindow::createActions( )
     connect(action_sizeFrPx_2, SIGNAL(triggered()), this, SLOT(SetFrameSizePx()) );
     connect(action_OutImage, SIGNAL(triggered()), this, SLOT(SaveTrAs()) );
     action_OutImage->setShortcut(tr("Ctrl+S"));
-    //connect(action_save_tr, SIGNAL(triggered()), this, SLOT(SaveTr()) );
 
     action_SavePoints->setEnabled(false);
     actionRectangle->setEnabled(true);
     actionTransform->setEnabled(false);
     action_OutImage->setEnabled(false);
-    //actionEndCut->setEnabled(false);
-    //actionCut->setEnabled(false);    
 }
-//задание размера рамки в мм
+// Задание размера рамки в мм
 void KrestWindow::SetFrameSizeMm( ) {
   QIDSFSMm->setDoubleValue(FrameSizeMm);
   QIDSFSMm->show();
@@ -373,26 +343,21 @@ void KrestWindow::SetFrameSizeMm( ) {
       RR->SetSize(FrameSizePx);      
    }
    updateActions();  
-  //FrameSizeMm=QID.getDouble("Input Size of Frame, mm","Enter:",FrameSizeMm,0,2147483647,3);
-  //connect(QIDSFSMm,SIGNAL(doubleValueChanged(double)),this,SLOT(changeFrameSize(double)));
- // if(PixelSize!=0)
-    // FrameSizePx=(int)ceil(FrameSizeMm/PixelSize);
- // else
-    // QMessageBox::information(this, tr("Error"),
-                         //            tr("Incorrect Size of Pixel(=0)"));
 }
-//задание размера пикселЯ в мм
+
+
+// Задание размера пикселЯ в мм
 void KrestWindow::SetPixelSize( ) {
 	QInputDialog qid;
 	qid.setCancelButtonText(tr("Выход"));
 	qid.setOkButtonText(tr("Ввод"));
-	//PixelSize=QInputDialog::getDouble(tr("Введите размер пикселя"),tr("Введите значение, мм:"),PixelSize,0.001,2147483647,3);
 	qid.getDouble(tr("Введите размер пикселя"), tr("Введите значение, мм:"), PixelSize, 0.001, 2147483647, 3);
 	if(PixelSize==0)
 	 QMessageBox::information(this, tr("Ошибка"),
 	                                 tr("Некорректно введен размер пикселя(размер = 0)"));
 }
-//задание размера пикселЯ в пиксеЯх
+
+// Задание размера пикселЯ в пиксеЯх
 void KrestWindow::SetFrameSizePx() {
    QIDSFSPx->setIntValue(FrameSizePx);
    QIDSFSPx->show();
@@ -400,41 +365,40 @@ void KrestWindow::SetFrameSizePx() {
       RR->SetSize(FrameSizePx);      
    }
    updateActions(); 
-   //connect(QID,SIGNAL(intValueChanged(int)),this,SLOT(changeFrameSize(int)));
-   /*if(action_sizeFrPx->isChecked()) {
-      connect(spinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(changeFrameSize(int)));
-   }
-   else
-      disconnect(spinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(changeFrameSize(int)));*/
 }
+
+
 void KrestWindow::createMenus( )
 {
 
 }
 
-//! отработка нажатия на кнопку мыши
+
+//! Отработка нажатия на кнопку мыши
 void KrestWindow::mousePressEvent ( QGraphicsSceneMouseEvent * event) {
    if(event->button()==Qt::LeftButton&&graphicsView->dragMode()==QGraphicsView::RubberBandDrag) {
       startPos=event->pos();
-      //std::cout<<"Start Pos"<<startPos.x()<<" "<<startPos.y()<<std::endl;
    }
 }
-//! отработка отпускания кнопки мыши
+
+
+//! Отработка отпускания кнопки мыши
 void KrestWindow::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event) {
    if(event->button()==Qt::LeftButton&&graphicsView->dragMode()==QGraphicsView::RubberBandDrag) {
       endPos=event->pos();
-      //std::cout<<"End Pos"<<endPos.x()<<" "<<endPos.y()<<std::endl;      
       QRect RectRBD(startPos.toPoint(),endPos.toPoint());
       graphicsView->fitInView(RectRBD,Qt::KeepAspectRatio);
    }
 }
+
+
 void KrestWindow::ScaleRubberFit(QRect ScaleRect) {
    if(graphicsView->dragMode()==QGraphicsView::RubberBandDrag)
       graphicsView->fitInView(ScaleRect,Qt::KeepAspectRatio) ;
 }
-//!создание рамки дл выделени рабочей области
+
+
+//! Создание рамки дл выделени рабочей области
 void KrestWindow::cutRect() {
     int thickness;
     cursorCross();
@@ -452,18 +416,16 @@ void KrestWindow::cutRect() {
     RR->cutting = true;
     cut_count = 0;
     actionEndCut_2->setEnabled(true);
-    //actionCut->setEnabled(true);
     actionRectangle_2->setEnabled(false);
     actionPickAllKrest->setEnabled(false);
-    //actionTransform->setEnabled(false);    
 }
-//!закончить выделение рабочей области
+
+
+//! Закончить выделение рабочей области.
 void KrestWindow::endCut( ) {
    printf("End cut!\n");
    if ( RR != NULL ) {
       scene -> removeItem ( RR ) ;
-      //delete RR;
-      printf("End cut: delete RR!\n");
 
       cutting = false;
       RR->cutting = false;
@@ -471,40 +433,20 @@ void KrestWindow::endCut( ) {
       cut_count = 0;
       actionRectangle_2->setEnabled(true);
       actionEndCut_2->setEnabled(false);
-      //actionCut->setEnabled(false);
-      //actionTransform->setEnabled(true);
       actionPickAllKrest->setEnabled(true);  
    }   
 }
-/*
-//!отмена действий
-void KrestWindow::ctrlZ_Cut() {
-   int thickness;  
-   scene->removeItem(RR); 
-   delete RR;
-   scene->removeItem (QGI_Image);
-   if(!cut_count)
-      QGI_Image->set_image(nameImgInit);
-   else
-      QGI_Image->set_image(nameOut+".tif");
-   scene->addItem(QGI_Image); 
-   QGI_Image->setZValue(-1000.0);
-   thickness=(int)ceil(QGI_Image->boundingRect().height()/1000);
-   RR = new RubberRect(QGI_Image->boundingRect(),Center,thickness);
-   scene->addItem(RR);
-   RR->setZValue(1000.0);   
-   --cut_count;
-}
-void KrestWindow::ctrlZ_All_Cut() {
 
-}*/
-//удаление креста
+
+// Удаление креста.
 void KrestWindow::del()
 {
    QList<QGraphicsItem*>items=scene->selectedItems();
       qDeleteAll(items);
 }
-//!выбор креста
+
+
+//! Выбор креста.
 Krest *KrestWindow::selectedKrest()
 {
     Krest * krest;
@@ -517,7 +459,9 @@ Krest *KrestWindow::selectedKrest()
         return 0;
     }
 }
-//!смена курсора
+
+
+//! Смена курсора.
 void KrestWindow::cursorCross() {
     graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setCursor(Qt::CrossCursor);    
@@ -542,7 +486,6 @@ void KrestWindow::openImage( ) {
        name_buf=nameIn;       
        nameOut =name_buf.remove(tiff_regexp)+"_tr";
        nameOut =nameOut.split("/").back();
-       //pathOut ="./transform/";
        QGI_Image->set_image( QObject::tr( fileName ) );          
        graphicsView->scaled=1.0;
        graphicsView->scale(graphicsView->scaled, graphicsView->scaled);
@@ -555,14 +498,6 @@ void KrestWindow::openImage( ) {
     action_OutImage->setEnabled(true);    
 }
 
-/*bool KrestWindow::saveImage(const QString &fileName, const char *fileFormat) {
-    return theImage.save(fileName, fileFormat);
-} */
-/*void KrestWindow::setImage(const QImage &image) {
-    QGI_Image= image.convertToFormat(QImage::Format_RGB32);
-    update();
-    updateGeometry();
-}*/
 
 void KrestWindow::openPoints( ) {
    const QString fileName = QFileDialog::getOpenFileName(this,
@@ -581,40 +516,25 @@ void KrestWindow::openPoints( ) {
   }
 }
 void KrestWindow::savePoints( ) {
-  calculCoordKrest(); 
- /* FILE *fp;
-  fp = fopen("E:/Shtanov/projects/interface_krest/points/points.txt","w");
-    // for( int i = 0; i < 4; ++i) {
-         fprintf(fp,"%f %f\n",YD.x(),YD.y());
-         fprintf(fp,"%f %f\n",YU.x(),YU.y());
-         fprintf(fp,"%f %f\n",XL.x(),XL.y());
-         fprintf(fp,"%f %f\n",XR.x(),XR.y());
-    //  }
-  fclose(fp);  */
-  //QString path = "./points";
-   //QDir points_dir(path);
-   //if(!points_dir.exists()) //если нет такой папки, то она создаетсЯ
-      //points_dir.mkdir(path);
+    calculCoordKrest();
 
-   //QString fileName = "points.dat";
-   QFile file(pathPoint);
-   if(!file.open(QIODevice::WriteOnly)) {
-      QMessageBox::information(this, tr("Крест"),
-                                     tr("Точки не были сохранены %1.").arg(pathPoint));
-   }
-   else{
-      QDataStream out(&file);
-      out<<YD<<YU<<XL<<XR;
-      file.close();
-   }
+    QFile file(pathPoint);
+    if(!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::information(this, tr("Крест"),
+                                 tr("Точки не были сохранены %1.").arg(pathPoint));
+    }
+    else{
+        QDataStream out(&file);
+        out<<YD<<YU<<XL<<XR;
+        file.close();
+    }
 }
 
 void KrestWindow::savePointsAs( ) {
    const QString fileName = QFileDialog::getSaveFileName(this,
-                                                          tr("Сохранить точки в файл"), 
-                                    "./points");
+                                                         tr("Сохранить точки в файл"), "./points");
    calculCoordKrest();
-   pathPoint=fileName;
+   pathPoint = fileName;
    QFile file(fileName);
    if(!file.open(QIODevice::WriteOnly)) {
       QMessageBox::information(this, tr("Крест"),
@@ -629,40 +549,36 @@ void KrestWindow::savePointsAs( ) {
 }
 
 void KrestWindow::calculCoordKrest() {
- Krest * krest;
+    Krest * krest;
     QList<QGraphicsItem *> items = scene->items( );
-//вычисление координат крестиков
+    // Вычисление координат крестиков.
     foreach (QGraphicsItem *item, items) {
-      if(krest = dynamic_cast<Krest *>(item)) {
-          if(krest->text()=="+X") {           // правый крестик "+Х"
-              XR = krest->pos();
-           //std::cout<<"XR2: "<<XR.x( )<<" YR: "<<XR.y( )<<std::endl;
-          }
-          if(krest->text()=="-X") {           // левый крестик "-Х"
-              XL = krest->pos();
-           //std::cout<<"XL2: "<<XL.x( )<<" YL: "<<XL.y( )<<std::endl;
-          }
-          if(krest->text()=="+Y") {           // верхний крестик "+Y"
-              YU = krest->pos();
-           //std::cout<<"XYU2: "<<YU.x( )<<" YYU: "<<YU.y( )<<std::endl;
-          } 
-          if(krest->text()=="-Y") {           // нижний крестик "-Y"
-              YD = krest->pos();
-           //std::cout<<"XYD2: "<<YD.x( )<<" YYD: "<<YD.y( )<<std::endl;
-          }      
-      }
-        // break;
+        if(krest = dynamic_cast<Krest *>(item)) {
+            if(krest->text()=="+X") {           // правый крестик "+Х"
+                XR = krest->pos();
+            }
+            if(krest->text()=="-X") {           // левый крестик "-Х"
+                XL = krest->pos();
+            }
+            if(krest->text()=="+Y") {           // верхний крестик "+Y"
+                YU = krest->pos();
+            }
+            if(krest->text()=="-Y") {           // нижний крестик "-Y"
+                YD = krest->pos();
+            }
+        }
     }
 }
 
-void KrestWindow::changeCoord(double x,double y) {
-   QString str1,str2;
+void KrestWindow::changeCoord(double x, double y) {
+   QString str1, str2;
 
    str1=QObject::tr("%1").arg(int(x));
    str1=QObject::tr("%1").arg(int(y));
 
    lineEdit_X->setText(str1);
 }
+
 void KrestWindow::SaveTrAs( ) {
    QRegExp tiff_regexp ("(.tiff|.bmp|.jpg|.img|.png|.gif|.tif)");
    const QString fileName = QFileDialog::getSaveFileName(this,
@@ -677,12 +593,15 @@ void KrestWindow::SaveTrAs( ) {
    std::cout<<"nameOut: "<<qPrintable(nameOut)<<std::endl;
    actionTransform->setEnabled(true);
 }
+
 void KrestWindow::SaveTr( ) {
   
-}  
+}
+
+
 void KrestWindow::run_process() {
    progressBar->setValue(0);
-   QVector<QPointF> qvqp_x;//-x+y+x-y
+   QVector<QPointF> qvqp_x; // {-x, +y, +x, -y}
    calculCoordKrest();
    qvqp_x<<XL<<YU<<XR<<YD;
 
@@ -697,6 +616,7 @@ void KrestWindow::run_process() {
    pThread->start();
 }
 
+
 void KrestWindow::StopProcess() {
   std::cout<<"StopProcess"<<std::endl;
   if(pThread) pThread->wait();
@@ -706,6 +626,45 @@ void KrestWindow::StopProcess() {
   progressBar->setValue(progressBar->maximum());
   std::cout<<" delete pThread"<<std::endl;
 }
+
+
+/*bool KrestWindow::saveImage(const QString &fileName, const char *fileFormat) {
+    return theImage.save(fileName, fileFormat);
+} */
+
+
+/*void KrestWindow::setImage(const QImage &image) {
+    QGI_Image= image.convertToFormat(QImage::Format_RGB32);
+    update();
+    updateGeometry();
+}*/
+
+
+/*
+//!отмена действий
+void KrestWindow::ctrlZ_Cut() {
+   int thickness;
+   scene->removeItem(RR);
+   delete RR;
+   scene->removeItem (QGI_Image);
+   if(!cut_count)
+      QGI_Image->set_image(nameImgInit);
+   else
+      QGI_Image->set_image(nameOut+".tif");
+   scene->addItem(QGI_Image);
+   QGI_Image->setZValue(-1000.0);
+   thickness=(int)ceil(QGI_Image->boundingRect().height()/1000);
+   RR = new RubberRect(QGI_Image->boundingRect(),Center,thickness);
+   scene->addItem(RR);
+   RR->setZValue(1000.0);
+   --cut_count;
+}
+
+
+void KrestWindow::ctrlZ_All_Cut() {
+
+}*/
+
 
 /*void KrestWindow::mouseMoveEvent ( QMouseEvent * event )
 {
@@ -763,7 +722,7 @@ void KrestWindow::StopProcess() {
   ro_block[2]=QVector3D(XL.x(),XL.y(),0);
   ro_block[3]=QVector3D(XR.x(),XR.y(),0);  
 
-  e1_block=ro_block[3]-ro_block[2];  //направленийа осей координат ГеоСК 
+  e1_block=ro_block[3]-ro_block[2];  //направленийа осей координат ГеоСК
   e2_block=ro_block[1]-ro_block[0];  //во входном снимке
 
   e1_block=e1_block.normalized (); //нормированный базис ГеоСК входного снимка
@@ -833,7 +792,7 @@ void KrestWindow::StopProcess() {
   ro[1]=QVector3D(YU.x(),YU.y(),0);   //  1
   ro[2]=QVector3D(XL.x(),XL.y(),0);   //2   3
   ro[3]=QVector3D(XR.x(),XR.y(),0);   //  0
-  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК 
+  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
   e2=ro[1]-ro[0];  //во входном снимке
 
   e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
@@ -1121,7 +1080,7 @@ void KrestWindow::StopProcess() {
   ro[1]=QVector3D(YU.x(),YU.y(),0);   //  1
   ro[2]=QVector3D(XL.x(),XL.y(),0);   //2   3
   ro[3]=QVector3D(XR.x(),XR.y(),0);   //  0
-  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК 
+  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
   e2=ro[1]-ro[0];  //во входном снимке
 
   e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
@@ -1192,7 +1151,7 @@ void KrestWindow::StopProcess() {
        progressBar->setValue((int)((double)(iBlock*NumBlocksX_OUT+jBlock)/(double)NumBlocksX_OUT*NumBlocksY_OUT)*100);
        //очередные координаты блока в выходном растре
        QPoint ijPos(jBlock*BlockSizeX_OUT, iBlock*BlockSizeY_OUT) ; 
-       //читаем блок результирующей карты      
+       //читаем блок результирующей карты
        QPoint pb[4];
        pb[0] = ijPos;
        pb[1] = ijPos+QPoint(BlockSizeX_OUT,0);               //12
@@ -1618,7 +1577,7 @@ QString  name_out=QObject::tr("E:/Shtanov/images/img_doc_1_out.bmp");//.arg(k);
   */
 /*  f=fopen(name_point.toLocal8Bit().data(),"r");
   {
-   double c,r;                       //!! загрузка точек из файла, 
+   double c,r;                       //!! загрузка точек из файла,
    int k;                            //!! мне не надо ибо все уже есть
    for(k=0;k<4;k++) {
     fscanf(f,"%lf %lf",&c,&r);
@@ -2057,10 +2016,10 @@ void KrestWindow::pressed_button_run() {
  // ro_block[2]=QVector3D(XL.x(),XL.y(),0);
  // ro_block[3]=QVector3D(XR.x(),XR.y(),0);  
   
-  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК 
+  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
   e2=ro[1]-ro[0];  //во входном снимке
 
- // e1_block=ro_block[3]-ro_block[2];  //направленийа осей координат ГеоСК 
+ // e1_block=ro_block[3]-ro_block[2];  //направленийа осей координат ГеоСК
   //e2_block=ro_block[1]-ro_block[0];  //во входном снимке
   
   e1=e1.normalized (); //нормированный базис ГеоСК входного снимка
@@ -2420,7 +2379,7 @@ void KrestWindow::pressed_button_run() {
   ro[1]=QVector3D(YU.x(),YU.y(),0);
   ro[2]=QVector3D(XL.x(),XL.y(),0);
   ro[3]=QVector3D(XR.x(),XR.y(),0);   
-  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК 
+  e1=ro[3]-ro[2];  //направленийа осей координат ГеоСК
   e2=ro[1]-ro[0];  //во входном снимке
 
   e1=e1.normalized (); //нормированный базис ГеоСК входного снимка

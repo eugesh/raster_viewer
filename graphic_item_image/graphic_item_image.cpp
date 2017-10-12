@@ -1,12 +1,12 @@
 #include "graphic_item_image.h"
 
-//! êîíñòðóêòîð
+//! ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
 QGraphicsItem_Image::QGraphicsItem_Image(QGraphicsItem * parent ) : QGraphicsItem(parent)
 {
   number_bands=0;
   //setFlag(QGraphicsItem::ItemIsMovable,true);
 }
-//! çàäàíèå èìåíè ôàéëà ñ ðàñòðîâûìè äàííûìè
+//! Ð·Ð°Ð´Ð°Ð½Ð¸Ðµ Ð¸Ð¼ÐµÐ½Ð¸ Ñ„Ð°Ð¹Ð»Ð° Ñ Ñ€Ð°ÑÑ‚Ñ€Ð¾Ð²Ñ‹Ð¼Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ð¼Ð¸
 void QGraphicsItem_Image::set_image(const QString &name_file)
 {
   prepareGeometryChange ();
@@ -19,7 +19,7 @@ void QGraphicsItem_Image::set_image(const QString &name_file)
    GDALDataset  *pdata;
    pdata=(GDALDataset*)GDALOpen(name.toLocal8Bit().data(),GA_ReadOnly);
    if (pdata!=0) {
-///-----ïðîâåðêà èìåþùèõñß êîïèé-----------------------------------------
+///-----Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð¸Ð¼ÐµÑŽÑ‰Ð¸Ñ…ÑÐ¯ ÐºÐ¾Ð¿Ð¸Ð¹-----------------------------------------
     int numCount = (pdata->GetRasterBand(1))->GetOverviewCount(); 
     QFile ovrfile(name+".ovr");
        if(!ovrfile.exists()&&numCount==0){
@@ -29,14 +29,14 @@ void QGraphicsItem_Image::set_image(const QString &name_file)
        }
 ///----------------------------------------------------------------------
     int w,h;
-    // ÷òåíèå øèðèíû è âûñîòû ðàñòðà â ïèêñåëÿõ
+    // Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ ÑˆÐ¸Ñ€Ð¸Ð½Ñ‹ Ð¸ Ð²Ñ‹ÑÐ¾Ñ‚Ñ‹ Ñ€Ð°ÑÑ‚Ñ€Ð° Ð² Ð¿Ð¸ÐºÑÐµÐ»ÑÑ…
     w=pdata->GetRasterXSize();
     h=pdata->GetRasterYSize();
     size_raster=QSize(w,h);
-    // ÷òåíèå êîëè÷åñòâà bandîâ
+    // Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð° bandÐ¾Ð²
     number_bands=pdata->GetRasterCount();
     //printf("number_bands=%d\n",number_bands);
-    // ôîðìèðîâàíèå ñïèñêà îòîáðàæàåìûõ ñëîåâ
+    // Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ ÑÐ¿Ð¸ÑÐºÐ° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… ÑÐ»Ð¾ÐµÐ²
       if (number_bands==1){
         list_bands[0]= 1;
       };
@@ -45,21 +45,21 @@ void QGraphicsItem_Image::set_image(const QString &name_file)
         list_bands[1]=2;
         list_bands[2]=1;        
       };
-    // çàêðûòèå ôàéëà
+    // Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð°
     GDALClose(pdata);
    };    
   };
 }
 
-//! ïîëó÷åíèå ãðàíèö
+//! Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð³Ñ€Ð°Ð½Ð¸Ñ†
 QRectF QGraphicsItem_Image::boundingRect () const
 {
   return QRectF(QPointF(0,0),size_raster) ;
 }
-//! îòðèñîâêà
+//! Ð¾Ñ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ°
 void QGraphicsItem_Image::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-  QTransform transform;// ïàðàìåòðû ïåðåõîäà îò ëîêàëüíîé ÑÊ ê ÑÊ óñòðîéñòâà îòîáðàæåíèÿ
+  QTransform transform;// Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð° Ð¾Ñ‚ Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš Ðº Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
   int W,H;
   QPaintDevice *pdevice;
   pdevice=painter->device () ;
@@ -70,69 +70,69 @@ void QGraphicsItem_Image::paint ( QPainter * painter, const QStyleOptionGraphics
     W=pdevice->width ();
     H=pdevice->height ();
 
-    // ïîëó÷åíèå ïàðàìåòðîâ ïåðåõîäà îò ëîêàëüíîé ÑÊ ê ÑÊ óñòðîéñòâà îòîáðàæåíèÿ
+    // Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð° Ð¾Ñ‚ Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš Ðº Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
     transform=painter->combinedTransform();
 
-    QRectF window_rect_in_LSC;// îáëàñòü óñòðîéñòâà îòîáðàæåíèÿ â ëîêàëüíîé ÑÊ
-    QRectF workig_area_in_LSC;// îáëàñòü îòîáðàæàåìûõ äàííûõ â ëîêàëüíîé ÑÊ
-    QRectF workig_area_in_DSC;// îáëàñòü îòîáðàæàåìûõ äàííûõ â ÑÊ óñòðîéñòâà îòîáðàæåíèÿ
-    qreal xw1,xw2,yw1,yw2;// ïàðàìåòðû îáëàñòè îòîáðàæàåìûõ ðàñòðîâûõ äàííûõ â ÑÊ îêíà
-    qreal cf1,cf2,rf1,rf2;// ïàðàìåòðû îáëàñòè îòîáðàæàåìûõ ðàñòðîâûõ äàííûõ â ÑÊ ðàñòðà
+    QRectF window_rect_in_LSC;// Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ð² Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš
+    QRectF workig_area_in_LSC;// Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš
+    QRectF workig_area_in_DSC;// Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
+    qreal xw1,xw2,yw1,yw2;// Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… Ñ€Ð°ÑÑ‚Ñ€Ð¾Ð²Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð¡Ðš Ð¾ÐºÐ½Ð°
+    qreal cf1,cf2,rf1,rf2;// Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… Ñ€Ð°ÑÑ‚Ñ€Ð¾Ð²Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð¡Ðš Ñ€Ð°ÑÑ‚Ñ€Ð°
 
-    // âû÷èñëåíèå ïðÿìîóãîëüíîé îáëàñòè çàíèìàåìîé óñòðîéñòâîì îòîáàæåíèÿ â ëîêàëüíîé ÑÊ
+    // Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ðµ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð¹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð·Ð°Ð½Ð¸Ð¼Ð°ÐµÐ¼Ð¾Ð¹ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð¾Ð¼ Ð¾Ñ‚Ð¾Ð±Ð°Ð¶ÐµÐ½Ð¸Ñ Ð² Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš
     window_rect_in_LSC=transform.inverted().mapRect(QRectF(0,0,W,H));
 
     //printf("W=%d H=%d\n",W,H);
-    // ïîëó÷åíèå ãðàíè÷íûõ òî÷åê ïðÿìîóãîëüíîé îáëàñòè 
+    // Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð³Ñ€Ð°Ð½Ð¸Ñ‡Ð½Ñ‹Ñ… Ñ‚Ð¾Ñ‡ÐµÐº Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð¹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ 
     window_rect_in_LSC.getCoords(&cf1, &rf1, &cf2, &rf2);
     
     //printf("1: cf1=%lf cf2=%lf rf1=%lf rf2=%lf\n",cf1,cf2,rf1,rf2);
-    // îïðåäåëåíèå îáëàñòè ðàñòðîâûõ äàííûõ òðåáóåìîé äëÿ îòîáðàæåíèÿ
+    // Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ñ€Ð°ÑÑ‚Ñ€Ð¾Ð²Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ñ‚Ñ€ÐµÐ±ÑƒÐµÐ¼Ð¾Ð¹ Ð´Ð»Ñ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
     workig_area_in_LSC=bound.intersected(QRectF(window_rect_in_LSC));
     
-    // âû÷èñëåíèå îáëàñòè îòîáðàæàåìûõ äàííûõ â ÑÊ óñòðîéñòâà îòîáðàæåíèÿ
+    // Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ðµ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð° Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
     workig_area_in_DSC=transform.mapRect(workig_area_in_LSC);
 
-    // ïîëó÷åíèå ãðàíè÷íûõ òî÷åê ïðÿìîóãîëüíîé îáëàñòè 
+    // Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð³Ñ€Ð°Ð½Ð¸Ñ‡Ð½Ñ‹Ñ… Ñ‚Ð¾Ñ‡ÐµÐº Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð¹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ 
     workig_area_in_LSC.getCoords(&cf1, &rf1, &cf2, &rf2);
     workig_area_in_DSC.getCoords(&xw1, &yw1, &xw2, &yw2);
 
     //printf("2: cf1=%lf cf2=%lf rf1=%lf rf2=%lf\n",cf1,cf2,rf1,rf2);
 
     //printf("xw1=%lf xw2=%lf yw1=%lf yw2=%lf\n",xw1,xw2,yw1,yw2);
-    // ñîõðàíåíèå ïàðàìåòðîâ îáúåêòà painter
+    // ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¾Ð±ÑŠÐµÐºÑ‚Ð° painter
     painter->save();
-    // óñòàíîâêà ïàðàìåòðîâ ïåðåõîäà â åäèíè÷íîå ïîëîæåíèå
+    // ÑƒÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð° Ð² ÐµÐ´Ð¸Ð½Ð¸Ñ‡Ð½Ð¾Ðµ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ
     painter->resetTransform();
     if (!name.isEmpty()) {
     GDALDataset  *pdata;
 
-      // îòêðûòèå ôàéëà íà ÷òåíèå
+      // Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð° Ð½Ð° Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ
     pdata=(GDALDataset*)GDALOpen(name.toLocal8Bit().data(),GA_ReadOnly);
 
     if (pdata!=0) {
-     int nb_working;// êîëè÷åñòâî èñïîëüçóåìûõ ñëîåâ
+     int nb_working;// ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÐ¼Ñ‹Ñ… ÑÐ»Ð¾ÐµÐ²
      QImage im;
 
      if ((!workig_area_in_DSC.isEmpty())&&((number_bands==1)||(number_bands>=3))) {
           
-      int ww,hw;// ðàçìåðû îáëàñòè îòîáðàæåíèÿ â ïèêñåëÿõ â ÑÊ óñòðîéñòâ îòîáðàæåíèÿ
-      int bpp;// áàéò íà ïèêñåëü â ðåçóëüòèðóþùåì ðàñòðå 
+      int ww,hw;// Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ð² Ð¿Ð¸ÐºÑÐµÐ»ÑÑ… Ð² Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð² Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
+      int bpp;// Ð±Ð°Ð¹Ñ‚ Ð½Ð° Ð¿Ð¸ÐºÑÐµÐ»ÑŒ Ð² Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð¸Ñ€ÑƒÑŽÑ‰ÐµÐ¼ Ñ€Ð°ÑÑ‚Ñ€Ðµ 
      
-          // îïðåäåëåíèå ðàçìåðîâ îòîáðàæàåìîé îáëàñòè â ïèêñåëÿõ â ÑÊ óñòðîéñòâ îòîáðàæåíèÿ 
+          // Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¾Ð² Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÐ¼Ð¾Ð¹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð² Ð¿Ð¸ÐºÑÐµÐ»ÑÑ… Ð² Ð¡Ðš ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð² Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ 
           ww=xw2-xw1+1;
           hw=yw2-yw1+1;
 
       if (number_bands==1) {
-            // îáðàáîòêà îäíîñëîéíîãî ðàñòðà
+            // Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð¾Ð´Ð½Ð¾ÑÐ»Ð¾Ð¹Ð½Ð¾Ð³Ð¾ Ñ€Ð°ÑÑ‚Ñ€Ð°
        im=QImage(ww,hw,QImage::Format_Indexed8);
        bpp=1;
        nb_working=1;
 
-            // ôîðìèðîâàíèå òàáëèöû öâåòîâ
+            // Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ñ†Ð²ÐµÑ‚Ð¾Ð²
        int k;
        im.setNumColors(256);
-       // ÷òåíèå òàáëèöû öâåòîâ
+       // Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ñ†Ð²ÐµÑ‚Ð¾Ð²
        GDALColorTable *pcolor_table;
        pcolor_table=(pdata->GetRasterBand(1))->GetColorTable ();
        
@@ -156,7 +156,7 @@ void QGraphicsItem_Image::paint ( QPainter * painter, const QStyleOptionGraphics
       };
 
       //im.fill(0);
-      int wf,hf;// ðàçìåðû îáëàñòè â ëîêàëüíîé ÑÊ èñïîëüçóìîé äëÿ îòîáðàæåíèÿ
+      int wf,hf;// Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð² Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð¹ Ð¡Ðš Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¼Ð¾Ð¹ Ð´Ð»Ñ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 
           wf=cf2-cf1+1;
           hf=rf2-rf1+1;
@@ -164,19 +164,19 @@ void QGraphicsItem_Image::paint ( QPainter * painter, const QStyleOptionGraphics
           if ((cf1+wf)>size_raster.width()-1) wf=size_raster.width()-1-cf1;
           if ((rf1+hf)>size_raster.height()-1) hf=size_raster.height()-1-rf1;
           
-      // ÷òåíèå ðàñòðîâûõ äàííûõ
+      // Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ Ñ€Ð°ÑÑ‚Ñ€Ð¾Ð²Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ…
       pdata->RasterIO(GF_Read,cf1,rf1, wf,hf,im.bits(),im.width(),im.height(),GDT_Byte,
       nb_working,list_bands,bpp,im.bytesPerLine(),1);
 
-          // îòîáðàæåíèå äàííûõ
+          // Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ…
           painter->drawImage(workig_area_in_DSC,im);
      };
-        // çàêðûòèå ôàéëà
+        // Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð°
      GDALClose(pdata);
     }; 
     };
 
-    // âîñòàíîâëåíèå ïàðàìåòðîâ îáúåêòà painter
+    // Ð²Ð¾ÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¾Ð±ÑŠÐµÐºÑ‚Ð° painter
     painter->restore();
   };
 }

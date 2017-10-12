@@ -3,54 +3,41 @@
 
 #include <QGraphicsView>
 #include "krest.h"
-//#include "form_mainwindow_krest.h"
 
 class KrestView : public QGraphicsView {
-public:
-	bool cutting;
-	//QPushButton *KVpushButtonFit;
-	//bool rubberBandIsShown;
-	QRect rubberBandRect;
-	//enum { Margin = 50 };
-	//double scale;//!< коэффициент масштаба
-	//! конструктор
-	KrestView (QWidget *parent = 0);
-	double x0,y0;//!< координаты левого верхнего угла растра в СК xy  
-	double c_R,r_R;//!< положение курсора на правом снимке в СК правого снимка	
-	int dr,dc;
-	double scaled;
 public:;
-	//void setPushButtonFit (QPushButton *QPB) {KVpushButtonFit=QPB;};
+	bool cutting;
+	QRect rubberBandRect;
+	//! РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
+	KrestView (QWidget *parent = 0);
+	//!< РљРѕРѕСЂРґРёРЅР°С‚С‹ Р»РµРІРѕРіРѕ РІРµСЂС…РЅРµРіРѕ СѓРіР»Р° СЂР°СЃС‚СЂР° РІ РЎРљ xy.
+	double x0, y0;
+	//!< РџРѕР»РѕР¶РµРЅРёРµ РєСѓСЂСЃРѕСЂР° РЅР° РїСЂР°РІРѕРј СЃРЅРёРјРєРµ РІ РЎРљ РїСЂР°РІРѕРіРѕ СЃРЅРёРјРєР°.
+	double c_R, r_R;
+	int dr, dc;
+	double scaled;
+
 private:;
 	int HEIGHT_WINDOW, WIDTH_WINDOW;
-	bool is_move;//!< флаг режима перемещения
+	//!< Р¤Р»Р°Рі СЂРµР¶РёРјР° РїРµСЂРµРјРµС‰РµРЅРёСЏ.
+	bool is_move;
 	QPoint pressed_left_button;
-	QCursor prev_curcor;//!< курсор окна
+	//!< РљСѓСЂСЃРѕСЂ РѕРєРЅР°.
+	QCursor prev_curcor;
 	QCursor null_curcor;
+
 protected:;
 	virtual void	mouseMoveEvent (QMouseEvent * event);
-	//virtual void	mousePressEvent ( QGraphicsSceneMouseEvent * event );  
-	//void updateRubberBandRegion();
-	//! отработка нажатия на кнопку мыши
-	//virtual void	mousePressEvent ( QMouseEvent * event );
-	//! отработка отпускания на кнопки мыши
-	//virtual void	mouseReleaseEvent ( QMouseEvent * event );
-	//!отработка сигнала перемещения мыши  
-	//virtual void	mouseMoveEvent ( QMouseEvent * event );    
-	//! отработка нажатия на кнопки
-	//virtual void keyPressEvent ( QKeyEvent * event ) ;  
-	//! отработка поворота колесика мыши
+	//! РћС‚СЂР°Р±РѕС‚РєР° РїРѕРІРѕСЂРѕС‚Р° РєРѕР»РµСЃРёРєР° РјС‹С€Рё.
 	void wheelEvent (QWheelEvent * event);
-	//! отработка сигнала перемещения мыши
-	//virtual void	mouseMoveEvent ( QMouseEvent * event );   
+
 public slots:;
-	//void ScaleFit() {this->fitInView(this->scene()->itemsBoundingRect(),Qt::KeepAspectRatio);} ;
 
 signals:;
-	//! сигнал изменения масштаба
+	//! CРёРіРЅР°Р» РёР·РјРµРЅРµРЅРёСЏ РјР°СЃС€С‚Р°Р±Р°.
 	void change_scale (double scale);
 
-	//! сигнал о положении курсора на снимке
+	//! CРёРіРЅР°Р» Рѕ РїРѕР»РѕР¶РµРЅРёРё РєСѓСЂСЃРѕСЂР° РЅР° СЃРЅРёРјРєРµ.
 	void position_on_shot(double x,double y) {};
 };
 

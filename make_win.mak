@@ -118,22 +118,9 @@ ifdef USE_DEVCONTROL
 cpp_options += /D "USE_DEVCONTROL"
 endif
 
-# опиции для компилятора С++ intel 64 /Qopenmp
-#cpp_options=  /EHs /GR /D "WIN64"  /D "_MBCS"   /D "_CONSOLE"  /D "UNICODE" \
-#				/D "_CRT_SECURE_NO_DEPRECATE"   \
-#				/D "__MSVC_RUNTIME_CHECKS"  \
-#				/Zc:wchar_t- \
-#				/O2 /Qipo  /MD  /Zp16 /Qparallel /Qpar-report1  /Qvec-report1  /QxT /Qopenmp
-
-				
-# /D "_VC60"				
 #опиции для компилятора С++ для работы с Qt 4.x
 qt_options= /D "QT3_SUPPORT" /D "QT_DLL" /D "QT_THREAD_SUPPORT" \
 	/D "QT_LARGEFILE_SUPPORT" /D "QT_EDITION=QT_EDITION_DESKTOP" /D "QT_GUI_LIB" /D "QT_CORE_LIB" 	
-
-#опиции для компилятора С++ для работы с Qt 3.x
-#qt_options= /D "QT_THREAD_SUPPORT" /D "QT_NO_DEBUG"\
-#	/D "QT_LARGEFILE_SUPPORT" /D "QT_EDITION=QT_EDITION_DESKTOP" 
 
 qt_options+= \
 	$(opt_inc) "$(QT_DIR_VER)/include" \
@@ -148,11 +135,8 @@ qt_options+= \
 cpp_options_cuda=$(opt_inc) "$(CUDA_DIR)/include"
 
 ifdef USE_CUDA
-#library+=$(CUDA_DIR)/lib/cuda.lib $(CUDA_DIR)/lib/cudart.lib
 library+=$(CUDA_DIR)/lib/Win32/cuda.lib $(CUDA_DIR)/lib/Win32/cudart.lib $(CUDA_DIR)/lib/Win32/cufft.lib $(CUDA_DIR)/lib/Win32/cublas.lib $(CUDA_DIR)/lib/Win32/curand.lib $(CUDA_DIR)/lib/Win32/cusparse.lib $(CUDA_DIR)/lib/Win32/nvcuvenc.lib $(CUDA_DIR)/lib/Win32/nvcuvid.lib $(CUDA_DIR)/lib/Win32/OpenCL.lib
 endif
-
-#library+= corr_core.lib
 
 ############################################################
 
@@ -171,8 +155,4 @@ command_comp=$(CPP) /c $(cpp_options) $(cpp_options_include) $(qt_options) $(cpp
 ############################################################
 
 command_touch=touch $@
-#command_link=$(LINK) /OUT:$@ /LIBPATH:$(LIBINTEL)  /SUBSYSTEM:console /machine:X86 
-#command_link=$(LINK) /OUT:$@ /DEBUG /LIBPATH:$(LIBINTEL)  /SUBSYSTEM:console /machine:X86
-#command_link=$(LINK) /OUT:$@ /DEBUG /SUBSYSTEM:console /machine:X86
-#command_link=$(LINK) /OUT:$@ /SUBSYSTEM:console /machine:X86
 command_link=$(LINK) /OUT:$@ /SUBSYSTEM:windows /machine:X86

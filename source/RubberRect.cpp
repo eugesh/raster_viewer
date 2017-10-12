@@ -1,12 +1,12 @@
 #include <QtGui>
-
 #include "RubberRect.h"
+
 
 RubberRect::RubberRect(QRectF RectF,QRectF maxRectF,QPointF Ctr,int th,QGraphicsItem * parent): QGraphicsItem(parent)
 {
     Center=Ctr;
     max_imgRect = maxRectF;
-  //  sizeF_max = RectF.size();
+    // sizeF_max = RectF.size();
     thickness = th;
     bchanges = false;
     cutting = false;
@@ -19,39 +19,39 @@ RubberRect::RubberRect(QRectF RectF,QRectF maxRectF,QPointF Ctr,int th,QGraphics
     sizeF = QRectF(coord1,coord3).size();
     myOutlineColor = Qt::darkGreen;
     setFlags(ItemIsMovable | ItemIsSelectable);
-    //puts("NO error!");
-//    setFlag(ItemIgnoresTransformations,true);
+    // setFlag(ItemIgnoresTransformations,true);
 }
+
 
 void RubberRect::setCenter(QPointF C) {
    Center=C;
    qreal sizeX = sizeF.width ();
    qreal sizeY = sizeF.height();   
-   change_coord(QPointF(Center.x()-sizeX/2,Center.y()-sizeY/2),1);
-   change_coord(QPointF(Center.x()+sizeX/2,Center.y()-sizeY/2),2);
-   change_coord(QPointF(Center.x()+sizeX/2,Center.y()+sizeY/2),3);
-   change_coord(QPointF(Center.x()-sizeX/2,Center.y()+sizeY/2),4);
+   change_coord(QPointF(Center.x() - sizeX/2, Center.y() - sizeY/2), 1);
+   change_coord(QPointF(Center.x() + sizeX/2, Center.y() - sizeY/2), 2);
+   change_coord(QPointF(Center.x() + sizeX/2, Center.y() + sizeY/2), 3);
+   change_coord(QPointF(Center.x() - sizeX/2, Center.y() + sizeY/2), 4);
 }
+
 
 void RubberRect::SetSize(int size) {
-   change_coord(QPointF(Center.x()-size/2,Center.y()-size/2),1);
-   change_coord(QPointF(Center.x()+size/2,Center.y()-size/2),2);
-   change_coord(QPointF(Center.x()+size/2,Center.y()+size/2),3);
-   change_coord(QPointF(Center.x()-size/2,Center.y()+size/2),4);
-   sizeF=QSizeF(size,size);
+   change_coord(QPointF(Center.x() - size/2, Center.y() - size/2), 1);
+   change_coord(QPointF(Center.x() + size/2, Center.y() - size/2), 2);
+   change_coord(QPointF(Center.x() + size/2, Center.y() + size/2), 3);
+   change_coord(QPointF(Center.x() - size/2, Center.y() + size/2), 4);
+   sizeF = QSizeF(size, size);
 }
 
+
 void RubberRect::setP1(QPointF newp1){
-     if ( newp1 != coord1 ) {
-//      if (max_imgRect.contains( coord1)) {
-         prepareGeometryChange();
-         coord1 = newp1;
-         coord4.setX(coord1.x());
-         coord2.setY(coord1.y());
-         sizeF = QRectF(coord1,coord3).size();
-         update();
-      }
- //    }
+    if (newp1 != coord1) {
+        prepareGeometryChange();
+        coord1 = newp1;
+        coord4.setX(coord1.x());
+        coord2.setY(coord1.y());
+        sizeF = QRectF(coord1,coord3).size();
+        update();
+    }
 }
 
 void RubberRect::setP2(QPointF newp2){
@@ -112,7 +112,7 @@ bool RubberRect::change_coord(QPointF point,int corner) {
    
    switch(corner) {
     case 1:
-      if (max_imgRect.topLeft().x()>point.x()) //отслеживается выход 
+      if (max_imgRect.topLeft().x()>point.x()) //отслеживается выход
         point.setX(max_imgRect.topLeft().x()); //за границу растра
       if (max_imgRect.topLeft().y()>point.y()) 
         point.setY(max_imgRect.topLeft().y());      
@@ -150,48 +150,26 @@ QRectF RubberRect::boundingRect() const
 
 void RubberRect::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {   
-      //  printf("good11!");
-   
-   if(cutting) {
-     corner = changed_corner(event->pos());
-    // printf(" %.1f %.1f %d",event->pos().x(),event->pos().y(),corner);
-     // if (event->button() == Qt::LeftButton&&corner) {
-       if(corner<5&&corner>0){
-             //   printf("good22!");
-        change_coord(event->pos(),corner);
-        bchanges = true;
+    if(cutting) {
+        corner = changed_corner(event->pos());
+        if(corner<5&&corner>0){
+            change_coord(event->pos(),corner);
+            bchanges = true;
         }
-       if(corner==5) {
-        //origin = event->pos();
-        bmove=true;
+        if(corner==5) {
+            bmove=true;
         }
-      }
+    }
 }
 
 void RubberRect::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 {
-  // static int corner;
-   // if (rubberBandIsShown) {
-   //  corner = changed_corner(event->pos());
-      if(bchanges){
+    if(bchanges){
         change_coord(event->pos(),corner);
-//printf("\nsizeF H%.1f W%.1f P1 X%.1f Y%.1f P2 %.1f %.1f P3 %.1f %.1f P4 %.1f %.1f ",sizeF.height(),
- // sizeF.width(),coord1.x(),coord1.y(),coord2.x(),coord2.y()
-           //    ,coord3.x(),coord3.y(),coord4.x(),coord4.y());       
-      //  printf("good33!");
-      }
-      if(bmove) {
-    //    moveBy (event->pos().x()-origin.x(),event->pos().y()-origin.y());
-      }
-    //    updateRubberBandRegion();
-     //   rubberBandRect.setBottomRight(event->pos());
-     //   updateRubberBandRegion();
-     
-  //  }
-
-  //   if (rubberBand)
-   //      rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
-    // QAbstractItemView::mouseMoveEvent(event);
+    }
+    if(bmove) {
+        //    moveBy (event->pos().x()-origin.x(),event->pos().y()-origin.y());
+    }
 }
 
 void RubberRect::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event ) {
@@ -203,14 +181,7 @@ void RubberRect::paint(QPainter *painter,
                  const QStyleOptionGraphicsItem *option,
                  QWidget * /* widget*/ ) 
 {
-   // painter->save();
-      // option->levelOfDetail;
-//    painter->setPen(myTextColor);
     QPen pen(myOutlineColor);
-  //  if (option->state & QStyle::State_Selected) {
-     //   pen.setStyle(Qt::DotLine);
-     //   pen.setWidth(2);
-  //  }
     pen.setWidth(2*thickness);
     painter->setPen(pen);
     QRectF rect(coord1,coord3); //= outlineRect();

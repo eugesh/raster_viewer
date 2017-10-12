@@ -9,21 +9,21 @@
 #include <QPainter>
 #include <QFile>
 
-//! класс, описвающий объект растр с использованием gdal для работы с технологией QGraphicsScene/GraphicsQView
+//! РєР»Р°СЃСЃ, РѕРїРёСЃРІР°СЋС‰РёР№ РѕР±СЉРµРєС‚ СЂР°СЃС‚СЂ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј gdal РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РµС…РЅРѕР»РѕРіРёРµР№ QGraphicsScene/GraphicsQView
 class QGraphicsItem_Image : public QGraphicsItem {
 private:;
-	QString name;//!< имя файла с растровыми данными
-	QSize  size_raster;//!< размеры растра в пикселях
-	int number_bands;//!< количество bandов
-	int list_bands[3];//!< список номеров bandов при формировании растровых данных
+	QString name;//!< РёРјСЏ С„Р°Р№Р»Р° СЃ СЂР°СЃС‚СЂРѕРІС‹РјРё РґР°РЅРЅС‹РјРё
+	QSize  size_raster;//!< СЂР°Р·РјРµСЂС‹ СЂР°СЃС‚СЂР° РІ РїРёРєСЃРµР»СЏС…
+	int number_bands;//!< РєРѕР»РёС‡РµСЃС‚РІРѕ bandРѕРІ
+	int list_bands[3];//!< СЃРїРёСЃРѕРє РЅРѕРјРµСЂРѕРІ bandРѕРІ РїСЂРё С„РѕСЂРјРёСЂРѕРІР°РЅРёРё СЂР°СЃС‚СЂРѕРІС‹С… РґР°РЅРЅС‹С…
 public:;
-	//! конструктор
+	//! РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	QGraphicsItem_Image(QGraphicsItem * parent = 0);
-	//! задание имени файла с растровыми данными
+	//! Р·Р°РґР°РЅРёРµ РёРјРµРЅРё С„Р°Р№Р»Р° СЃ СЂР°СЃС‚СЂРѕРІС‹РјРё РґР°РЅРЅС‹РјРё
 	void set_image(const QString &name_file);
-	//! получение границ
+	//! РїРѕР»СѓС‡РµРЅРёРµ РіСЂР°РЅРёС†
 	virtual QRectF	boundingRect () const;
-	//! отрисовка
+	//! РѕС‚СЂРёСЃРѕРІРєР°
 	virtual void	paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	//!
 };

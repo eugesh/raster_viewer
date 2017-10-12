@@ -1,8 +1,8 @@
-# объектные файла за исключением moc-файлов
+# РѕР±СЉРµРєС‚РЅС‹Рµ С„Р°Р№Р»Р° Р·Р° РёСЃРєР»СЋС‡РµРЅРёРµРј moc-С„Р°Р№Р»РѕРІ
 obj_file+=\
 	$(obj_dir)/graphic_item_image.$(ext_obj)
 
-# исходные файлы
+# РёСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹
 $(obj_dir)/graphic_item_image.$(ext_obj) : $(source_graphic_item_image)/graphic_item_image.cpp
 	$(command_comp)
 
