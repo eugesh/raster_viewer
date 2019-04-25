@@ -1,4 +1,5 @@
 #include <QRectF>
+#include <qdebug.h>
 #include <QGraphicsSceneMouseEvent>
 #include "image-item.h"
 
@@ -41,6 +42,7 @@ void ImageItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->modifiers() & Qt::ShiftModifier) {
         cur_pose = event->pos();
+        qDebug() << "cur_pose = " << cur_pose;
         update();
         return;
     }

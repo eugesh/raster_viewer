@@ -182,10 +182,10 @@ void ImageView::setResetButtonEnabled()
 
 void ImageView::setupMatrix()
 {
-    qreal scale = qPow(qreal(2), (zoomSlider->value() - 250) / qreal(50));
+    m_scale = qPow(qreal(2), (zoomSlider->value() - 250) / qreal(50));
 
     QMatrix matrix;
-    matrix.scale(scale, scale);
+    matrix.scale(m_scale, m_scale);
     matrix.rotate(rotateSlider->value());
 
     graphicsView->setMatrix(matrix);
@@ -227,11 +227,13 @@ void ImageView::print()
 void ImageView::zoomIn(int level)
 {
     zoomSlider->setValue(zoomSlider->value() + level);
+    qDebug() << "level = " << zoomSlider->value() + level;
 }
 
 void ImageView::zoomOut(int level)
 {
     zoomSlider->setValue(zoomSlider->value() - level);
+    qDebug() << "level = " << zoomSlider->value() - level;
 }
 
 void ImageView::rotateLeft()

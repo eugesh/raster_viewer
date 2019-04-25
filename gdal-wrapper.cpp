@@ -1,4 +1,7 @@
 #include "gdal-wrapper.hpp"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 GDALWrapper::GDALWrapper() {
     zero();
@@ -87,7 +90,7 @@ GDALWrapper::buildOverviews() {
 
 QImage
 GDALWrapper::compose_rgb_image(float *rbuf, float *gbuf, float *bbuf, int w, int h, float k) {
-    QImage rgb_image;
+    QImage rgb_image(w,h,QImage::Format_RGB32);
 
     for(int i=0; i < h; ++i) {
         for(int j=0; j < w; ++j) {
@@ -110,31 +113,35 @@ GDALWrapper::compose_rgb_image(float *rbuf, float *gbuf, float *bbuf, int w, int
  * @return QImage.
  */
 QImage
-GDALWrapper::get_image(int x, int y, int width, int height) {
+GDALWrapper::get_image(int x, int y, int raster_w, int raster_h, int width, int height) {
     GDALRasterBand *pRBand, *pGBand, *pBBand;
     float *rBuffer, *gBuffer, *bBuffer;
     pRBand = _pData->GetRasterBand( 1 );
     pGBand = _pData->GetRasterBand( 2 );
     pBBand = _pData->GetRasterBand( 3 );
 
-    int nXSize = pRBand->GetXSize();
-    int nYSize = pRBand->GetYSize();
+    // int nXSize = pRBand->GetXSize();
+    // int nYSize = pRBand->GetYSize();
 
     // ToDo: read not blocks but scanlines.
     rBuffer = static_cast<float *> (CPLMalloc(sizeof(float) * width * height));
     gBuffer = static_cast<float *> (CPLMalloc(sizeof(float) * width * height));
     bBuffer = static_cast<float *> (CPLMalloc(sizeof(float) * width * height));
 
-    pRBand->RasterIO( GF_Read, x, y, width, height,
-                      rBuffer, nXSize, 1, GDT_Float32,
+    //rBuffer = (float*)std::calloc(width * height, sizeof(float));
+    //gBuffer = (float*)std::calloc(width * height, sizeof(float));
+    //bBuffer = (float*)std::calloc(width * height, sizeof(float));
+
+    pRBand->RasterIO( GF_Read, x, y, raster_w, raster_h,
+                      rBuffer, width, height, GDT_Float32,
                       0, 0 );
 
-    pGBand->RasterIO( GF_Read, x, y, width, height,
-                      gBuffer, nXSize, 1, GDT_Float32,
+    pGBand->RasterIO( GF_Read, x, y, raster_w, raster_h,
+                      gBuffer, width, height, GDT_Float32,
                       0, 0 );
 
-    pBBand->RasterIO( GF_Read, x, y, width, height,
-                      bBuffer, nXSize, 1, GDT_Float32,
+    pBBand->RasterIO( GF_Read, x, y, raster_w, raster_h,
+                      bBuffer, width, height, GDT_Float32,
                       0, 0 );
 
     return compose_rgb_image(rBuffer, gBuffer, bBuffer, width, height);

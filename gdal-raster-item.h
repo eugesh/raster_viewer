@@ -3,8 +3,12 @@
 
 #include <QObject>
 #include <QGraphicsItem>
+#include <QGraphicsScene>
 #include <QPainter>
 #include "gdal-wrapper.hpp"
+
+
+class QGraphicsScene;
 
 
 class GDALRasterItem : public QGraphicsItem
@@ -22,6 +26,7 @@ public:
     }
 
     bool setRaster(QString filePath);
+    QSize getRasterSize() { return m_raster_size; }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -33,6 +38,7 @@ protected:
     QImage       m_image_part2draw;
     QPointF      m_cur_pose;
     GDALWrapper *m_raster;
+    QSize        m_raster_size;
 };
 
 #endif // GDALRASTERITEM_H

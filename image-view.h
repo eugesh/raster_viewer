@@ -62,7 +62,7 @@ private:
     QToolButton *resetButton;
     QSlider *zoomSlider;
     QSlider *rotateSlider;
-
+    qreal    m_scale;
 };
 
 #endif // IMAGEVIEW_H

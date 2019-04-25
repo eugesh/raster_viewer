@@ -64,6 +64,8 @@ MainWindow::openRaster() {
     QString path_to_raster =
             QFileDialog::getOpenFileName(this, tr("OPen raster"), m_raster_dir);
 
+    m_scene->addItem(m_raster_item);
+
     // Create GDAL raster;
     // GDALWrapper *raster = new GDALWrapper();
 

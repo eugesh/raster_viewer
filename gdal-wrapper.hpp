@@ -26,7 +26,7 @@ public:
 
     void setGeoTransform(double *pData);
     bool read(QString FileName);
-    QImage get_image(int x, int y, int width, int height);
+    QImage get_image(int x, int y, int raster_w, int raster_h, int width, int height);
     static QImage compose_rgb_image(float *rbuf, float *gbuf, float *bbuf, int w, int h, float k=1);
 
 protected:
