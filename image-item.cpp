@@ -2,7 +2,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include "image-item.h"
 
-ImageItem::ImageItem()
+ImageItem::ImageItem(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     setZValue(100);
 

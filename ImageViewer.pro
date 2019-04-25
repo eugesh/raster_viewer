@@ -9,6 +9,19 @@ QT += core gui widgets
 qtHaveModule(printsupport): QT += printsupport
 qtHaveModule(opengl): QT += opengl
 
+unix{
+INCLUDEPATH += /usr/include/gdal
+#LIB += -L/path_to_lib -lname_of_lib
+#LIB += -L/usr/lib/x86_64-linux-gnu/perl5/5.22/auto/Geo/GDAL -lGDAL
+#LIB += -L/usr/lib -libgdal
+#LIB += -L/usr/lib -lgdal
+LIBS += /usr/lib/libgdal.so
+}
+
+win{
+
+}
+
 TARGET = ImageViewer
 TEMPLATE = app
 
@@ -30,13 +43,18 @@ SOURCES += \
         mainwindow.cpp \
     image-graphics-scene.cpp \
     image-item.cpp \
-    image-view.cpp
+    image-view.cpp \
+    gdal-wrapper.cpp \
+    gdal-raster-item.cpp
 
 HEADERS += \
         mainwindow.h \
     image-graphics-scene.h \
     image-item.h \
-    image-view.h
+    image-view.h \
+    gdal-wrapper.hpp \
+    version.h \
+    gdal-raster-item.h
 
 FORMS += \
         mainwindow.ui

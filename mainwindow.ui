@@ -30,6 +30,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen_image"/>
+    <addaction name="actionOpen_raster"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -45,6 +46,11 @@
   <action name="actionOpen_image">
    <property name="text">
     <string>Open image</string>
+   </property>
+  </action>
+  <action name="actionOpen_raster">
+   <property name="text">
+    <string>Open raster</string>
    </property>
   </action>
  </widget>
