@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 #include "image-item.h"
 #include "gdal-raster-item.h"
-
+#include "image-view.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -37,6 +37,7 @@ private:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *m_scene;
+    ImageView      *m_view;
     QImage          m_image;
     QString         m_img_path;
     ImageItem      *m_image_item;

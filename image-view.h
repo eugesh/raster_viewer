@@ -50,6 +50,8 @@ private slots:
     void print();
     void rotateLeft();
     void rotateRight();
+    void fitInView();
+
 private:
     GraphicsView *graphicsView;
     QLabel *label;
@@ -60,6 +62,7 @@ private:
     QToolButton *antialiasButton;
     QToolButton *printButton;
     QToolButton *resetButton;
+    QToolButton *fitInButton;
     QSlider *zoomSlider;
     QSlider *rotateSlider;
     qreal    m_scale;

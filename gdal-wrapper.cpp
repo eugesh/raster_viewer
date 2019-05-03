@@ -144,5 +144,11 @@ GDALWrapper::get_image(int x, int y, int raster_w, int raster_h, int width, int 
                       bBuffer, width, height, GDT_Float32,
                       0, 0 );
 
-    return compose_rgb_image(rBuffer, gBuffer, bBuffer, width, height);
+    QImage out_img = compose_rgb_image(rBuffer, gBuffer, bBuffer, width, height);
+
+    CPLFree(rBuffer);
+    CPLFree(gBuffer);
+    CPLFree(bBuffer);
+
+    return out_img;
 }

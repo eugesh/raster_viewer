@@ -1,8 +1,8 @@
 #include <QFileDialog>
+#include <QGraphicsView>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "image-view.h"
 #include "image-item.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_image_item = new ImageItem();
     m_scene->addItem(m_image_item);
 
-    ImageView *view = new ImageView("Top left view");
-    view->view()->setScene(m_scene);
+    m_view = new ImageView("Top left view");
+    m_view->view()->setScene(m_scene);
 
-    setCentralWidget(view);
+    setCentralWidget(m_view);
 
     connect(ui->actionOpen_image, SIGNAL(triggered()), this, SLOT(openImage()));
     connect(ui->actionOpen_raster, SIGNAL(triggered()), this, SLOT(openRaster()));
@@ -65,12 +65,13 @@ MainWindow::openRaster() {
             QFileDialog::getOpenFileName(this, tr("OPen raster"), m_raster_dir);
 
     m_scene->addItem(m_raster_item);
-
     // Create GDAL raster;
     // GDALWrapper *raster = new GDALWrapper();
 
     // Set raster to raster item;
     m_raster_item->setRaster(path_to_raster);
+
+    m_view->view()->fitInView(m_raster_item->boundingRect(), Qt::KeepAspectRatio);
 
     return 0;
 }

@@ -116,6 +116,8 @@ ImageView::ImageView(const QString &name, QWidget *parent)
 #endif
     printButton = new QToolButton;
     printButton->setIcon(QIcon(QPixmap(":/fileprint.png")));
+    fitInButton = new QToolButton;
+    fitInButton->setText("FitInView");
 
     QButtonGroup *pointerModeGroup = new QButtonGroup(this);
     pointerModeGroup->setExclusive(true);
@@ -131,6 +133,7 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     labelLayout->addWidget(antialiasButton);
     labelLayout->addWidget(openGlButton);
     labelLayout->addWidget(printButton);
+    labelLayout->addWidget(fitInButton);
 
     QGridLayout *topLayout = new QGridLayout;
     topLayout->addLayout(labelLayout, 0, 0);
@@ -156,6 +159,7 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     connect(zoomInIcon, SIGNAL(clicked()), this, SLOT(zoomIn()));
     connect(zoomOutIcon, SIGNAL(clicked()), this, SLOT(zoomOut()));
     connect(printButton, SIGNAL(clicked()), this, SLOT(print()));
+    connect(fitInButton, SIGNAL(clicked()), this, SLOT(fitInView()));
 
     setupMatrix();
 }
@@ -173,6 +177,10 @@ void ImageView::resetView()
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
 
     resetButton->setEnabled(false);
+}
+
+void ImageView::fitInView() {
+    view()->fitInView(view()->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void ImageView::setResetButtonEnabled()
