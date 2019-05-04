@@ -62,7 +62,7 @@ GDALRasterItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     m_part2draw = m_raster->get_image(rect.x() * 8, rect.y() * 8, rect.width() * 8, rect.height() * 8, int(rect.width()), int(rect.height()));
     // view();
     painter->drawImage(m_cur_pose, m_general_overview);
-    painter->drawRect(0, 0, m_raster->w(), m_raster->h());
+    // painter->drawRect(0, 0, m_raster->w(), m_raster->h());
     // painter->drawImage(m_cur_pose, m_part2draw);
 }
 

@@ -11,6 +11,11 @@ class QSlider;
 class QToolButton;
 QT_END_NAMESPACE
 
+static const int zoom_max = 500;
+static const int zoom_min = 0;
+static const int zoom_middle = 250;
+
+
 class ImageView;
 
 class GraphicsView : public QGraphicsView
@@ -39,6 +44,7 @@ public:
 public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);
+    void fitInView();
 
 private slots:
     void resetView();
@@ -50,7 +56,6 @@ private slots:
     void print();
     void rotateLeft();
     void rotateRight();
-    void fitInView();
 
 private:
     GraphicsView *graphicsView;
@@ -63,8 +68,8 @@ private:
     QToolButton *printButton;
     QToolButton *resetButton;
     QToolButton *fitInButton;
-    QSlider *zoomSlider;
-    QSlider *rotateSlider;
+    QSlider *m_zoomSlider;
+    QSlider *m_rotateSlider;
     qreal    m_scale;
 };
 

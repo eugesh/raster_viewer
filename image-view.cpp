@@ -13,6 +13,9 @@
 #include <QtWidgets>
 #endif
 #include <qmath.h>
+#include <QTransform>
+#include <QMatrix4x4>
+#include <QMatrix>
 
 #if QT_CONFIG(wheelevent)
 void GraphicsView::wheelEvent(QWheelEvent *e)
@@ -55,16 +58,16 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     zoomOutIcon->setAutoRepeatDelay(0);
     zoomOutIcon->setIcon(QPixmap(":/zoomout.png"));
     zoomOutIcon->setIconSize(iconSize);
-    zoomSlider = new QSlider;
-    zoomSlider->setMinimum(0);
-    zoomSlider->setMaximum(500);
-    zoomSlider->setValue(250);
-    zoomSlider->setTickPosition(QSlider::TicksRight);
+    m_zoomSlider = new QSlider;
+    m_zoomSlider->setMinimum(zoom_min);
+    m_zoomSlider->setMaximum(zoom_max);
+    m_zoomSlider->setValue(zoom_middle);
+    m_zoomSlider->setTickPosition(QSlider::TicksRight);
 
     // Zoom slider layout
     QVBoxLayout *zoomSliderLayout = new QVBoxLayout;
     zoomSliderLayout->addWidget(zoomInIcon);
-    zoomSliderLayout->addWidget(zoomSlider);
+    zoomSliderLayout->addWidget(m_zoomSlider);
     zoomSliderLayout->addWidget(zoomOutIcon);
 
     QToolButton *rotateLeftIcon = new QToolButton;
@@ -73,17 +76,17 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     QToolButton *rotateRightIcon = new QToolButton;
     rotateRightIcon->setIcon(QPixmap(":/rotateright.png"));
     rotateRightIcon->setIconSize(iconSize);
-    rotateSlider = new QSlider;
-    rotateSlider->setOrientation(Qt::Horizontal);
-    rotateSlider->setMinimum(-360);
-    rotateSlider->setMaximum(360);
-    rotateSlider->setValue(0);
-    rotateSlider->setTickPosition(QSlider::TicksBelow);
+    m_rotateSlider = new QSlider;
+    m_rotateSlider->setOrientation(Qt::Horizontal);
+    m_rotateSlider->setMinimum(-360);
+    m_rotateSlider->setMaximum(360);
+    m_rotateSlider->setValue(0);
+    m_rotateSlider->setTickPosition(QSlider::TicksBelow);
 
     // Rotate slider layout
     QHBoxLayout *rotateSliderLayout = new QHBoxLayout;
     rotateSliderLayout->addWidget(rotateLeftIcon);
-    rotateSliderLayout->addWidget(rotateSlider);
+    rotateSliderLayout->addWidget(m_rotateSlider);
     rotateSliderLayout->addWidget(rotateRightIcon);
 
     resetButton = new QToolButton;
@@ -144,8 +147,8 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     setLayout(topLayout);
 
     connect(resetButton, SIGNAL(clicked()), this, SLOT(resetView()));
-    connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
-    connect(rotateSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
+    connect(m_zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
+    connect(m_rotateSlider, SIGNAL(valueChanged(int)), this, SLOT(setupMatrix()));
     connect(graphicsView->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(setResetButtonEnabled()));
     connect(graphicsView->horizontalScrollBar(), SIGNAL(valueChanged(int)),
@@ -171,16 +174,40 @@ QGraphicsView *ImageView::view() const
 
 void ImageView::resetView()
 {
-    zoomSlider->setValue(250);
-    rotateSlider->setValue(0);
+    m_zoomSlider->setValue(zoom_middle);
+    m_rotateSlider->setValue(0);
     setupMatrix();
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
 
     resetButton->setEnabled(false);
+    m_scale = 0;
 }
 
 void ImageView::fitInView() {
     view()->fitInView(view()->sceneRect(), Qt::KeepAspectRatio);
+
+    /*QTransform transform;
+    QMatrix4x4 matrix4x4 = QMatrix4x4( graphicsView->matrix() );
+    transform.setMatrix(matrix4x4);
+    m_scale = transform.scale();*/
+
+    // resetView();
+
+    QRectF unity = graphicsView->matrix().mapRect(QRectF(0, 0, 1, 1));
+    m_scale = unity.width();
+
+    qDebug() << "ImageView::fitInView(): scale = " << m_scale;
+
+    double slider_val = 50 * log(m_scale) + zoom_middle;
+
+    qDebug() << "ImageView::fitInView(): slider_val = " << slider_val;
+
+    m_zoomSlider->setValue(slider_val);
+
+    // setupMatrix();
+    setResetButtonEnabled();
+
+    // m_zoomSlider->setValue(zoom_middle * m_scale);
 }
 
 void ImageView::setResetButtonEnabled()
@@ -190,14 +217,20 @@ void ImageView::setResetButtonEnabled()
 
 void ImageView::setupMatrix()
 {
-    m_scale = qPow(qreal(2), (zoomSlider->value() - 250) / qreal(50));
+    m_scale = qPow(qreal(2), (m_zoomSlider->value() - zoom_middle) / qreal(50));
+    qDebug() << "ImageView::setupMatrix(): bar scale = " << m_scale;
 
     QMatrix matrix;
     matrix.scale(m_scale, m_scale);
-    matrix.rotate(rotateSlider->value());
+    matrix.rotate(m_rotateSlider->value());
 
     graphicsView->setMatrix(matrix);
     setResetButtonEnabled();
+
+    QRectF unity = graphicsView->matrix().mapRect(QRectF(0, 0, 1, 1));
+    m_scale = unity.width();
+
+    qDebug() << "ImageView::setupMatrix(): matrix scale = " << m_scale;
 }
 
 void ImageView::togglePointerMode()
@@ -234,22 +267,22 @@ void ImageView::print()
 
 void ImageView::zoomIn(int level)
 {
-    zoomSlider->setValue(zoomSlider->value() + level);
-    qDebug() << "level = " << zoomSlider->value() + level;
+    m_zoomSlider->setValue(m_zoomSlider->value() + level);
+    qDebug() << "level = " << m_zoomSlider->value() + level;
 }
 
 void ImageView::zoomOut(int level)
 {
-    zoomSlider->setValue(zoomSlider->value() - level);
-    qDebug() << "level = " << zoomSlider->value() - level;
+    m_zoomSlider->setValue(m_zoomSlider->value() - level);
+    qDebug() << "level = " << m_zoomSlider->value() - level;
 }
 
 void ImageView::rotateLeft()
 {
-    rotateSlider->setValue(rotateSlider->value() - 10);
+    m_rotateSlider->setValue(m_rotateSlider->value() - 10);
 }
 
 void ImageView::rotateRight()
 {
-    rotateSlider->setValue(rotateSlider->value() + 10);
+    m_rotateSlider->setValue(m_rotateSlider->value() + 10);
 }

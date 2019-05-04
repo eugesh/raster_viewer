@@ -71,7 +71,8 @@ MainWindow::openRaster() {
     // Set raster to raster item;
     m_raster_item->setRaster(path_to_raster);
 
-    m_view->view()->fitInView(m_raster_item->boundingRect(), Qt::KeepAspectRatio);
+    // m_view->view()->fitInView(m_raster_item->boundingRect(), Qt::KeepAspectRatio);
+    m_view->fitInView();
 
     return 0;
 }
