@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_image_item = new ImageItem();
     m_scene->addItem(m_image_item);
 
+    m_raster_item = new GDALRasterItem();
+
     m_view = new ImageView("Top left view");
     m_view->view()->setScene(m_scene);
 
@@ -27,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionOpen_image, SIGNAL(triggered()), this, SLOT(openImage()));
     connect(ui->actionOpen_raster, SIGNAL(triggered()), this, SLOT(openRaster()));
+    connect(m_view, SIGNAL(scale_changed(double)), this, SLOT(change_scale_for_items(double))); // QMetaObject::
 }
 
 void
@@ -62,7 +65,7 @@ MainWindow::openRaster() {
 
     //  Dialog to open filename;
     QString path_to_raster =
-            QFileDialog::getOpenFileName(this, tr("OPen raster"), m_raster_dir);
+            QFileDialog::getOpenFileName(this, tr("Open raster"), m_raster_dir);
 
     m_scene->addItem(m_raster_item);
     // Create GDAL raster;
@@ -73,6 +76,7 @@ MainWindow::openRaster() {
 
     // m_view->view()->fitInView(m_raster_item->boundingRect(), Qt::KeepAspectRatio);
     m_view->fitInView();
+    m_view->fitInView();
 
     return 0;
 }
@@ -81,4 +85,10 @@ int
 MainWindow::saveImageAs(QString path) {
 
     return 0;
+}
+
+void
+MainWindow::change_scale_for_items(double scale) {
+
+    m_raster_item->change_scale(scale);
 }

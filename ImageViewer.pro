@@ -54,7 +54,8 @@ HEADERS += \
     image-view.h \
     gdal-wrapper.hpp \
     version.h \
-    gdal-raster-item.h
+    gdal-raster-item.h \
+    affine_tr.hpp
 
 FORMS += \
         mainwindow.ui

@@ -267,14 +267,18 @@ void ImageView::print()
 
 void ImageView::zoomIn(int level)
 {
-    m_zoomSlider->setValue(m_zoomSlider->value() + level);
-    qDebug() << "level = " << m_zoomSlider->value() + level;
+    double scale = m_zoomSlider->value() + level;
+    m_zoomSlider->setValue(scale);
+    qDebug() << "zoomIn: scale = " << scale;
+    emit scale_changed(scale);
 }
 
 void ImageView::zoomOut(int level)
 {
+    double scale = m_zoomSlider->value() - level;
     m_zoomSlider->setValue(m_zoomSlider->value() - level);
     qDebug() << "level = " << m_zoomSlider->value() - level;
+    emit scale_changed(scale);
 }
 
 void ImageView::rotateLeft()

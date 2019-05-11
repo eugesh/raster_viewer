@@ -29,7 +29,7 @@ ImageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(widget);
     Q_UNUSED(option);
     // painter->drawImage(QPoint(0,0), m_image_part2draw);
-    painter->drawImage(cur_pose, m_image_part2draw);
+    painter->drawImage(QPoint(0, 0), m_image_part2draw);
 }
 
 void ImageItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -114,6 +114,13 @@ GDALWrapper::compose_rgb_image(float *rbuf, float *gbuf, float *bbuf, int w, int
  */
 QImage
 GDALWrapper::get_image(int x, int y, int raster_w, int raster_h, int width, int height) {
+    if(x > _W || y > _H) return QImage();
+    if(x < 0) x = 0;
+    if(y < 0) y = 0;
+    if(raster_w > _W - x) raster_w = _W - x;
+    if(raster_h > _H - y) raster_h = _H - y;
+
+
     GDALRasterBand *pRBand, *pGBand, *pBBand;
     float *rBuffer, *gBuffer, *bBuffer;
     pRBand = _pData->GetRasterBand( 1 );

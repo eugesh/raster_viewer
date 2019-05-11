@@ -57,6 +57,9 @@ private slots:
     void rotateLeft();
     void rotateRight();
 
+Q_SIGNALS:
+    void scale_changed(double scale);
+
 private:
     GraphicsView *graphicsView;
     QLabel *label;
