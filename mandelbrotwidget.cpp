@@ -247,8 +247,8 @@ void GDALdelbrotWidget::zoom(double zoomFactor)
 
 void GDALdelbrotWidget::scroll(int deltaX, int deltaY)
 {
-    centerX += deltaX * curScale;
-    centerY += deltaY * curScale;
+    centerX += deltaX / curScale;
+    centerY += deltaY / curScale;
 
     thread.render(centerX, centerY, curScale, size());
 
