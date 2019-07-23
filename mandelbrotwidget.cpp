@@ -121,7 +121,9 @@ void GDALdelbrotWidget::paintEvent(QPaintEvent * /* event */)
         return;
     }
 
-    if ((curScale - pixmapScale) < EPS_FLOAT_COMPARE) {
+    painter.drawPixmap(pixmapOffset, pixmap);
+
+    /*if ((curScale - pixmapScale) < EPS_FLOAT_COMPARE) {
         painter.drawPixmap(pixmapOffset, pixmap);
     }
     else {
@@ -137,9 +139,9 @@ void GDALdelbrotWidget::paintEvent(QPaintEvent * /* event */)
         QRectF exposed = painter.matrix().inverted().mapRect(rect()).adjusted(-1, -1, 1, 1);
         painter.drawPixmap(exposed, pixmap, exposed);
         painter.restore();
-    }
+    }*/
 
-    QString text = tr("Use mouse wheel or the '+' and '-' keys to zoom. "
+    /*QString text = tr("Use mouse wheel or the '+' and '-' keys to zoom. "
                       "Press and hold left mouse button to scroll.");
     QFontMetrics metrics = painter.fontMetrics();
     int textWidth = metrics.horizontalAdvance(text);
@@ -148,7 +150,7 @@ void GDALdelbrotWidget::paintEvent(QPaintEvent * /* event */)
     painter.setBrush(QColor(0, 0, 0, 127));
     painter.drawRect((width() - textWidth) / 2 - 5, 0, textWidth + 10, metrics.lineSpacing() + 5);
     painter.setPen(Qt::white);
-    painter.drawText((width() - textWidth) / 2, metrics.leading() + metrics.ascent(), text);
+    painter.drawText((width() - textWidth) / 2, metrics.leading() + metrics.ascent(), text);*/
 }
 
 void GDALdelbrotWidget::resizeEvent(QResizeEvent * /* event */)
@@ -240,9 +242,9 @@ void GDALdelbrotWidget::zoom(double zoomFactor)
 {
     curScale *= zoomFactor;
 
-    thread.render(centerX, centerY, curScale, size());
-
     update();
+
+    thread.render(centerX, centerY, curScale, size());
 }
 
 void GDALdelbrotWidget::scroll(int deltaX, int deltaY)
@@ -250,7 +252,7 @@ void GDALdelbrotWidget::scroll(int deltaX, int deltaY)
     centerX += deltaX / curScale;
     centerY += deltaY / curScale;
 
-    thread.render(centerX, centerY, curScale, size());
-
     update();
+
+    thread.render(centerX, centerY, curScale, size());
 }
