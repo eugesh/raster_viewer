@@ -115,13 +115,14 @@ void GDALdelbrotWidget::paintEvent(QPaintEvent * /* event */)
     QPainter painter(this);
     painter.fillRect(rect(), Qt::black);
 
-    if (pixmap.isNull()) {
+    if (m_image.isNull()) {
         painter.setPen(Qt::white);
         painter.drawText(rect(), Qt::AlignCenter, tr("Rendering initial image, please wait..."));
         return;
     }
 
-    painter.drawPixmap(pixmapOffset, pixmap);
+    // painter.drawPixmap(pixmapOffset, pixmap);
+    painter.drawImage(pixmapOffset, m_image);
 
     /*if ((curScale - pixmapScale) < EPS_FLOAT_COMPARE) {
         painter.drawPixmap(pixmapOffset, pixmap);
@@ -219,8 +220,8 @@ void GDALdelbrotWidget::mouseReleaseEvent(QMouseEvent *event)
         pixmapOffset += event->pos() - lastDragPos;
         lastDragPos = QPoint();
 
-        int deltaX = (width() - pixmap.width()) / 2 - pixmapOffset.x();
-        int deltaY = (height() - pixmap.height()) / 2 - pixmapOffset.y();
+        int deltaX = (width() - m_image.width()) / 2 - pixmapOffset.x();
+        int deltaY = (height() - m_image.height()) / 2 - pixmapOffset.y();
         scroll(deltaX, deltaY);
     }
 }
@@ -231,7 +232,8 @@ void GDALdelbrotWidget::updatePixmap(const QImage &image, double scaleFactor)
     if (!lastDragPos.isNull())
         return;
 
-    pixmap = QPixmap::fromImage(image);
+    // pixmap = QPixmap::fromImage(image);
+    m_image = image;
     pixmapOffset = QPoint();
     lastDragPos = QPoint();
     pixmapScale = scaleFactor;

@@ -87,6 +87,7 @@ private:
 
     RenderThread thread;
     QPixmap pixmap;
+    QImage m_image;
     QPoint pixmapOffset;
     QPoint lastDragPos;
     double centerX;
