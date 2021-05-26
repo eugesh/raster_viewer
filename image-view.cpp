@@ -14,20 +14,31 @@
 #endif
 #include <qmath.h>
 
+constexpr double ZOOM_SCALE_STEP = 6.0;
+
 #if QT_CONFIG(wheelevent)
 void GraphicsView::wheelEvent(QWheelEvent *e)
 {
     if (e->modifiers() & Qt::ControlModifier) {
-        if (e->delta() > 0)
-            view->zoomIn(6);
-        else
-            view->zoomOut(6);
+        if (e->delta() > 0) {
+            // view->zoomIn(int(ZOOM_SCALE_STEP));
+            emit view->scaleChanged(ZOOM_SCALE_STEP);
+        } else {
+            // view->zoomOut(int(ZOOM_SCALE_STEP));
+            emit view->scaleChanged(-ZOOM_SCALE_STEP);
+        }
         e->accept();
     } else {
         QGraphicsView::wheelEvent(e);
     }
+
 }
 #endif
+
+/*void GraphicsView::fitInView(const QRectF &rect, Qt::AspectRatioMode aspectRadioMode)
+{
+    QGraphicsView::fitInView(rect, aspectRadioMode);
+}*/
 
 ImageView::ImageView(const QString &name, QWidget *parent)
     : QFrame(parent)
@@ -61,6 +72,10 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     zoomSlider->setValue(250);
     zoomSlider->setTickPosition(QSlider::TicksRight);
 
+    zoomSlider->setVisible(false);
+    zoomOutIcon->setVisible(false);
+    zoomInIcon->setVisible(false);
+
     // Zoom slider layout
     QVBoxLayout *zoomSliderLayout = new QVBoxLayout;
     zoomSliderLayout->addWidget(zoomInIcon);
@@ -89,6 +104,11 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     resetButton = new QToolButton;
     resetButton->setText(tr("0"));
     resetButton->setEnabled(false);
+
+    rotateSlider->setVisible(false);
+    rotateLeftIcon->setVisible(false);
+    rotateRightIcon->setVisible(false);
+    resetButton->setVisible(false);
 
     // Label layout
     QHBoxLayout *labelLayout = new QHBoxLayout;
@@ -171,6 +191,7 @@ void ImageView::resetView()
     rotateSlider->setValue(0);
     setupMatrix();
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
+    graphicsView->fitInView(graphicsView->scene()->sceneRect(), Qt::KeepAspectRatio);
 
     resetButton->setEnabled(false);
 }

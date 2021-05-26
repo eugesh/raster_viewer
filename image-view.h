@@ -18,6 +18,7 @@ class GraphicsView : public QGraphicsView
     Q_OBJECT
 public:
     GraphicsView(ImageView *v) : QGraphicsView(), view(v) { }
+    //void fitInView(const QRectF &rect, Qt::AspectRatioMode aspectRadioMode = Qt::IgnoreAspectRatio);
 
 protected:
 #if QT_CONFIG(wheelevent)
@@ -36,6 +37,10 @@ public:
     explicit ImageView(const QString &name, QWidget *parent = nullptr);
 
     QGraphicsView *view() const;
+
+signals:
+    void scaleChanged(double value);
+
 public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);

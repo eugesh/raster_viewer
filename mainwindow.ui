@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1014</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>1014</width>
      <height>22</height>
     </rect>
    </property>
@@ -30,8 +30,59 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen_image"/>
+    <addaction name="actionSaveImage"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <widget class="QMenu" name="menuAddSplitter">
+     <property name="title">
+      <string>Add splitter</string>
+     </property>
+     <addaction name="actionVertical"/>
+     <addaction name="actionHorizontal"/>
+    </widget>
+    <addaction name="menuAddSplitter"/>
+    <addaction name="actionAddDockWidget"/>
+    <addaction name="action4Windows"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionSimultaneousScroll"/>
+   </widget>
+   <widget class="QMenu" name="menuFilters">
+    <property name="title">
+     <string>Filters</string>
+    </property>
+    <widget class="QMenu" name="menuColorSpace">
+     <property name="title">
+      <string>Color space</string>
+     </property>
+     <addaction name="actionRGB"/>
+     <addaction name="actionHSV"/>
+     <addaction name="actionHSI"/>
+    </widget>
+    <addaction name="menuColorSpace"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuFilters"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -45,6 +96,75 @@
   <action name="actionOpen_image">
    <property name="text">
     <string>Open image</string>
+   </property>
+  </action>
+  <action name="actionVertical">
+   <property name="text">
+    <string>Vertical</string>
+   </property>
+  </action>
+  <action name="actionHorizontal">
+   <property name="text">
+    <string>Horizontal</string>
+   </property>
+  </action>
+  <action name="actionAddDockWidget">
+   <property name="text">
+    <string>Add Dock Widget</string>
+   </property>
+  </action>
+  <action name="action4Windows">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>4 Windows</string>
+   </property>
+  </action>
+  <action name="actionSaveImage">
+   <property name="text">
+    <string>Save image</string>
+   </property>
+  </action>
+  <action name="actionSimultaneousScroll">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Simultaneous scroll</string>
+   </property>
+  </action>
+  <action name="actionRGB">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>RGB</string>
+   </property>
+  </action>
+  <action name="actionHSV">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>HSV</string>
+   </property>
+  </action>
+  <action name="actionHSI">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>HSI</string>
    </property>
   </action>
  </widget>
