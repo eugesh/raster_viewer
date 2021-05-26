@@ -12,7 +12,7 @@ ImageItem::ImageItem()
 
 QRectF
 ImageItem::boundingRect() const {
-    return QRectF(QPointF(0,0), m_image_part2draw.size());
+    return QRectF(QPointF(0, 0), m_image_part2draw.size());
 }
 
 /*QPainterPath
@@ -25,8 +25,8 @@ ImageItem::shape() const
 
 void
 ImageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    Q_UNUSED(widget);
-    Q_UNUSED(option);
+    Q_UNUSED(widget)
+    Q_UNUSED(option)
     // painter->drawImage(QPoint(0,0), m_image_part2draw);
     painter->drawImage(cur_pose, m_image_part2draw);
 }

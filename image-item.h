@@ -16,9 +16,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=nullptr) override;
 
     // temporal method.
-    void setImage(QImage img) {
-        m_image_part2draw = img;
-    }
+    void setImage(const QImage &img) { m_image_part2draw = img; }
+    QImage getImage() { return m_image_part2draw; }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -26,7 +25,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    QImage m_image;
+    // QImage m_image;
     QImage m_image_part2draw;
     QPointF cur_pose;
 
