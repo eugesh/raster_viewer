@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include "image-processing-common.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -37,9 +38,14 @@ public:
     explicit ImageView(const QString &name, QWidget *parent = nullptr);
 
     QGraphicsView *view() const;
+    ColorSpace colorSpace() { return m_colorSpace; }
+    int channelNumber() { return m_channelNumber; }
+    void changeColorSpace(ColorSpace cs) { m_colorSpace = cs; }
+    void changeChannelNumber(int cn) { m_channelNumber = cn; }
 
 signals:
     void scaleChanged(double value);
+    void angleChanged(double value);
 
 public slots:
     void zoomIn(int level = 1);
@@ -55,6 +61,7 @@ private slots:
     void print();
     void rotateLeft();
     void rotateRight();
+
 private:
     GraphicsView *graphicsView;
     QLabel *label;
@@ -67,7 +74,8 @@ private:
     QToolButton *resetButton;
     QSlider *zoomSlider;
     QSlider *rotateSlider;
-
+    ColorSpace m_colorSpace;
+    int m_channelNumber;
 };
 
 #endif // IMAGEVIEW_H

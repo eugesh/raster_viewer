@@ -7,6 +7,7 @@
 #include "ui_mainwindow.h"
 #include "image-view.h"
 #include "image-item.h"
+#include "imageprocessor.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAddDockWidget, &QAction::triggered, this, &MainWindow::onAddDockWidget);
     // connect(ui->actionSimultaneousScroll, &QAction::chan, this, &MainWindow::onSimultaneousScrollCheck);
     connect(ui->action4Windows, &QAction::triggered, this, &MainWindow::on4WindowsCheck);
+    connect(ui->actionRGB, &QAction::triggered, this, &MainWindow::onActionRGB);
+    connect(ui->actionHSV, &QAction::triggered, this, &MainWindow::onActionHSV);
+    connect(ui->actionHSI, &QAction::triggered, this, &MainWindow::onActionHSI);
 
     connect(m_view, &ImageView::scaleChanged, this, &MainWindow::scaleChanged);
     connect(this, &MainWindow::scaleChanged, m_view, &ImageView::zoomIn);
@@ -52,22 +56,35 @@ void MainWindow::on4WindowsCheck(int check)
 
 void MainWindow::onActionRGB()
 {
-
+    changeColorSpace(RGB);
+    ui->actionHSV->setChecked(false);
+    ui->actionHSI->setChecked(false);
 }
 
 void MainWindow::onActionHSV()
 {
-
+    changeColorSpace(HSV);
+    ui->actionRGB->setChecked(false);
+    ui->actionHSI->setChecked(false);
 }
 
 void MainWindow::onActionHSI()
 {
-
+    changeColorSpace(HSI);
+    ui->actionHSV->setChecked(false);
+    ui->actionRGB->setChecked(false);
 }
+
+/*void MainWindow::changeColorSpace(QColor::Spec s)
+{
+    m_colorSpace ;
+}*/
 
 void MainWindow::changeColorSpace(ColorSpace s)
 {
+    m_colorSpace = s;
 
+    openImages4Windows();
 }
 
 void MainWindow::create4Windows()
@@ -120,6 +137,22 @@ void MainWindow::create4Windows()
     }
 }
 
+void MainWindow::openImages4Windows()
+{
+    for (int i = 0; i < m_vpImageView.size(); ++i) {
+        m_vpImageView[i]->changeColorSpace(m_colorSpace);
+        m_vpImageView[i]->changeChannelNumber(i);
+        if (m_vpImageItems.count() <= i) {
+            m_vpImageItems.push_back(QSharedPointer<ImageItem>(new ImageItem()));
+            m_vpImageItems[i]->setImage(m_item->getImage());
+            QGraphicsScene *scene = new QGraphicsScene(this);
+            scene->addItem(m_vpImageItems[i].get());
+            m_vpImageView[i]->view()->setScene(scene);
+        }
+        m_vpImageItems[i]->setFiltered(getChannel(m_item->getImage(), m_colorSpace, i));
+    }
+}
+
 void MainWindow::show4Windows()
 {
 
@@ -149,6 +182,8 @@ MainWindow::openImage() {
     m_image = QImage(path);
 
     m_item->setImage(m_image);
+
+    openImages4Windows();
 
     return 0;
 }

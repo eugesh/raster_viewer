@@ -16,8 +16,15 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=nullptr) override;
 
     // temporal method.
-    void setImage(const QImage &img) { m_image_part2draw = img; }
-    QImage getImage() { return m_image_part2draw; }
+    void setImage(const QImage &img) {
+        m_image = img;
+        m_image_part2draw = img;
+    }
+    QImage setFiltered(const QImage &img);
+    QImage getImage() const { return m_image; }
+    QImage getFiltered() const { return m_image_part2draw; }
+    // QImage applyFilterOnImage();
+    // QImage applyFilterOnFiltered();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -25,7 +32,9 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    // QImage m_image;
+    // Original
+    QImage m_image;
+    // Filtered
     QImage m_image_part2draw;
     QPointF cur_pose;
 

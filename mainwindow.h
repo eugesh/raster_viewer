@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "image-item.h"
+#include "image-processing-common.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -13,23 +14,6 @@ class QDockWidget;
 class ImageView;
 QT_END_NAMESPACE
 
-enum ColorSpace {
-    RGB,
-    HSV,
-    HSL,
-    HSI
-};
-
-enum ColorNames {
-    red,
-    green,
-    blue,
-    hue,
-    saturation,
-    value,
-    lightness,
-    intensity
-};
 
 namespace Ui {
 class MainWindow;
@@ -45,8 +29,10 @@ public:
 
 private:
     void create4Windows();
+    void openImages4Windows();
     void show4Windows();
     void hide4Windows();
+    // void changeColorSpace(QColor::Spec s);
     void changeColorSpace(ColorSpace s);
 
 signals:
@@ -79,6 +65,7 @@ private:
     QVector<QSharedPointer<ImageView> > m_vpImageView;
     QVector<QSharedPointer<ImageItem> > m_vpImageItems;
     bool m_isSimultaneousScroll = true;
+    ColorSpace m_colorSpace = RGB;
 };
 
 #endif // MAINWINDOW_H
