@@ -15,6 +15,7 @@
 #include <qmath.h>
 
 constexpr double ZOOM_SCALE_STEP = 6.0;
+constexpr double ANGLE_STEP = 1.0;
 
 #if QT_CONFIG(wheelevent)
 void GraphicsView::wheelEvent(QWheelEvent *e)
@@ -28,6 +29,12 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
             emit view->scaleChanged(-ZOOM_SCALE_STEP);
         }
         e->accept();
+    } else if (e->modifiers() & Qt::AltModifier) {
+        if (e->delta() > 0) {
+            emit view->angleChanged(ANGLE_STEP);
+        } else {
+            emit view->angleChanged(-ANGLE_STEP);
+        }
     } else {
         QGraphicsView::wheelEvent(e);
     }
@@ -49,7 +56,7 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
     graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse); // QGraphicsView::AnchorViewCenter
 
     int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
     QSize iconSize(size, size);
@@ -90,8 +97,8 @@ ImageView::ImageView(const QString &name, QWidget *parent)
     rotateRightIcon->setIconSize(iconSize);
     rotateSlider = new QSlider;
     rotateSlider->setOrientation(Qt::Horizontal);
-    rotateSlider->setMinimum(-360);
-    rotateSlider->setMaximum(360);
+    rotateSlider->setMinimum(-180);
+    rotateSlider->setMaximum(180);
     rotateSlider->setValue(0);
     rotateSlider->setTickPosition(QSlider::TicksBelow);
 
@@ -253,6 +260,11 @@ void ImageView::zoomIn(int level)
 void ImageView::zoomOut(int level)
 {
     zoomSlider->setValue(zoomSlider->value() - level);
+}
+
+void ImageView::rotate(double angleStep)
+{
+    rotateSlider->setValue(rotateSlider->value() - int(angleStep));
 }
 
 void ImageView::rotateLeft()

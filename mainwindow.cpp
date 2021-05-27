@@ -39,7 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionHSI, &QAction::triggered, this, &MainWindow::onActionHSI);
 
     connect(m_view, &ImageView::scaleChanged, this, &MainWindow::scaleChanged);
+    connect(m_view, &ImageView::angleChanged, this, &MainWindow::angleChanged);
     connect(this, &MainWindow::scaleChanged, m_view, &ImageView::zoomIn);
+    connect(this, &MainWindow::angleChanged, m_view, &ImageView::rotate);
 }
 
 void MainWindow::on4WindowsCheck(int check)
@@ -133,7 +135,9 @@ void MainWindow::create4Windows()
         // connect(m_vpImageView[i].get(), SIGNAL(scaleChanged(double)), &mapper, SLOT(map()));
         // connect(mapper, SIGNAL(mapped(int)), this, SLOT(yourSlot(int)));
         connect(m_vpImageView[i].get(), &ImageView::scaleChanged, this, &MainWindow::scaleChanged);
+        connect(m_vpImageView[i].get(), &ImageView::angleChanged, this, &MainWindow::angleChanged);
         connect(this, &MainWindow::scaleChanged, m_vpImageView[i].get(), &ImageView::zoomIn);
+        connect(this, &MainWindow::angleChanged, m_vpImageView[i].get(), &ImageView::rotate);
     }
 }
 
@@ -175,11 +179,16 @@ MainWindow::~MainWindow()
 
 int
 MainWindow::openImage() {
-    // QString path = QOpenFileDialog;
-    QString path = QFileDialog::getOpenFileName(this, "Choose image file", tr("Image (*.png, *.bmp, *.tif)"));
+    QString fullFilePath = QFileDialog::getOpenFileName(this, tr("Choose image file"), m_lastPath, tr("Images (*.png *.bmp *.tif *.xpm *.jpg *.jpeg *.JPG)"));
     // m_settings_dlg->ui->queue_lineEdit->setText(queuePath);
 
-    m_image = QImage(path);
+    if (fullFilePath.isEmpty())
+        return -1;
+
+    QFileInfo fi(fullFilePath);
+    m_lastPath = fi.absoluteDir().path();
+
+    m_image = QImage(fullFilePath);
 
     m_item->setImage(m_image);
 

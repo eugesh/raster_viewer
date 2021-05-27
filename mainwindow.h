@@ -37,6 +37,8 @@ private:
 
 signals:
     void scaleChanged(double);
+    void angleChanged(double);
+    void imagePlaceChanged(double, double);
 
 private slots:
     int openImage();
@@ -66,6 +68,7 @@ private:
     QVector<QSharedPointer<ImageItem> > m_vpImageItems;
     bool m_isSimultaneousScroll = true;
     ColorSpace m_colorSpace = RGB;
+    QString m_lastPath = "/home";
 };
 
 #endif // MAINWINDOW_H

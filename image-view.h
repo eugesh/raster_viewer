@@ -50,6 +50,7 @@ signals:
 public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);
+    void rotate(double angleStep);
 
 private slots:
     void resetView();
